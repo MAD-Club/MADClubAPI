@@ -47,3 +47,6 @@ Another thing is that this will be a good real-life example of how stacks work i
 1. First, you want to fetch the dependencies. To fetch, do `vapor fetch` on the project directory.
 1. Afterwards, do `vapor update`. It may take some time.
 1. Once done, do `vapor xcode -y` to regenerate the xcode project file contents.
+
+## Contributing
+[Please see here](https://github.com/MAD-Club/web/blob/master/CONTRIBUTING.md)
