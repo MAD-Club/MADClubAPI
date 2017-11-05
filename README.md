@@ -2,6 +2,11 @@
 
 Setting up the Vapor framework is fairly easy, however there are a few requirements into setting this up.
 
+## First, Why Swift and Vapor?
+I primarily chose this, because we will be learning `Swift` in our 2nd year, so it makes it easy to pick up the syntax, and we'd only have to learn about the framework. In addition, it's one of the best modern languages out there. Its fast, easy, and readable code makes it easy for newcomers to join in and participate.
+
+Another thing is that this will be a good real-life example of how stacks work in a real-life scenario. Most small business will prefer a monolithic approach (which is what ours is) as to a microservice (where the API is separated, alongside with the web, android and iOS).
+
 ## Current Swift Version
 - Swift 4.0
 
@@ -16,7 +21,6 @@ Setting up the Vapor framework is fairly easy, however there are a few requireme
 1. Installing on Ubuntu requires you to use the `Package Manager` from Ubuntu. There are several tutorials out there.
 1. Here's a [tutorial regarding on how to install PostgreSQL](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04)
 ### MacOS
-
 #### Homebrew Version (recommended):
 1. Installing on MacOS requires you to use Homebrew. [https://brew.sh/](https://brew.sh/)
 1. Once done, installing PostgreSQL is simple. Open up Terminal and do `brew install postgresql`, and you should be set-up.
