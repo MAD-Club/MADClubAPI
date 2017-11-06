@@ -50,3 +50,7 @@ Another thing is that this will be a good real-life example of how stacks work i
 
 ## Contributing
 [Please see here](https://github.com/MAD-Club/web/blob/master/CONTRIBUTING.md)
+
+## Updated
+
+**Last Updated:** Nov. 5 2017
