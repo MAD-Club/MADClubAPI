@@ -7,6 +7,9 @@ I primarily chose this, because we will be learning `Swift` in our 2nd year, so 
 
 Another thing is that this will be a good real-life example of how stacks work in a real-life scenario. Most small business will prefer a monolithic approach (which is what ours is) as to a microservice (where the API is separated, alongside with the web, android and iOS).
 
+## Tutorials?
+Coming soon! In the meantime, you can view [Ray Wenderlich's ScreenCast of Vapor](https://videos.raywenderlich.com/screencasts). It's outdated with Vapor 1, but the concepts are the same, however the syntax is a little bit different. I'll host up screencasts soon.
+
 ## Current Swift Version
 - Swift 4.0
 
@@ -29,6 +32,21 @@ Another thing is that this will be a good real-life example of how stacks work i
 1. By default, your username is your username on the terminal, and your password is blank. You can set this up later, as it's your development environment, so it shouldn't matter too much.
 #### GUI Version:
 1. You can install the GUI version here: [https://postgresapp.com/](https://postgresapp.com/).
+
+### Setting it up on Vapor
+To setup on Vapor, we'll need to configure a secrets file. Add this in `Config/secrets/postgresql.json`
+
+```json
+{
+    "hostname": "127.0.0.1",
+    "user": "postgres",
+    "password": "hello",
+    "database": "test",
+    "port": 5432
+}
+```
+
+Set it to your environmental settings.
 
 ## Setting up your Environment
 1. Clone this repo into your directory.
