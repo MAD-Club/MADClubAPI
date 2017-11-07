@@ -63,12 +63,15 @@ Set it to your environmental settings.
 ## Updating and Fetching Dependencies
 1. Sometimes libraries update, and we may need to update them. If there is a case we do need to update, then the following steps are simple.
 1. First, you want to fetch the dependencies. To fetch, do `vapor fetch` on the project directory.
-1. Afterwards, do `vapor update`. It may take some time.
 1. Once done, do `vapor xcode -y` to regenerate the xcode project file contents.
+
+## Installation
+1. clone this repo, and branch off of `staging`. 
+1. do `vapor xcode -y` to generate your xcode project.
 
 ## Contributing
 [Please see here](https://github.com/MAD-Club/web/blob/master/CONTRIBUTING.md)
 
 ## Updated
 
-**Last Updated:** Nov. 5 2017
+**Last Updated:** Nov. 6 2017
