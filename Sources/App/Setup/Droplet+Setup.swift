@@ -2,9 +2,15 @@
 
 extension Droplet {
 	public func setup() throws {
-		// add our collection
-		try self.collection(V1Collection.self)
-	
-		// later on, we'll probably need to set our routes to connect for the website
+		// MARK: Home Route
+		// first we want to use the home index route to add in, and then we'll use the addRoutes
+		
+		let home = HomeController()
+		home.addRoutes(self)
+		
+		// MARK: User Routes
+		let users = UserController()
+		let userRoutes = grouped("users")
+		users.addRoutes(userRoutes)
 	}
 }
