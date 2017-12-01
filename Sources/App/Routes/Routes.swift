@@ -10,8 +10,7 @@ import HTTP
 
 extension Droplet {
   public func setupRoutes() throws {
-    //: MARK - UserController
-    let userVC = UserController()
-    resource("users", userVC)
+    //: MARK - API V1 Collection
+    try collection(V1Collection.self)
   }
 }

@@ -12,7 +12,7 @@ public final class User: Model {
 	public var storage: Storage = Storage()
 	
 	public init(row: Row) throws {
-	
+    
 	}
 	
 	public func makeRow() throws -> Row {
