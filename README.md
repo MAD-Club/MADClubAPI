@@ -7,6 +7,9 @@ I primarily chose this, because we will be learning `Swift` in our 2nd year, so 
 
 Another thing is that this will be a good real-life example of how stacks work in a real-life scenario. Most small business will prefer a monolithic approach (which is what ours is) as to a microservice (where the API is separated, alongside with the web, android and iOS).
 
+## Tutorials?
+Coming soon! In the meantime, you can view [Ray Wenderlich's ScreenCast of Vapor](https://videos.raywenderlich.com/screencasts). It's outdated with Vapor 1, but the concepts are the same, however the syntax is a little bit different. I'll host up screencasts soon.
+
 ## Current Swift Version
 - Swift 4.0
 
@@ -30,6 +33,21 @@ Another thing is that this will be a good real-life example of how stacks work i
 #### GUI Version:
 1. You can install the GUI version here: [https://postgresapp.com/](https://postgresapp.com/).
 
+### Setting it up on Vapor
+To setup on Vapor, we'll need to configure a secrets file. Add this in `Config/secrets/postgresql.json`
+
+```json
+{
+    "hostname": "127.0.0.1",
+    "user": "postgres",
+    "password": "hello",
+    "database": "test",
+    "port": 5432
+}
+```
+
+Set it to your environmental settings.
+
 ## Setting up your Environment
 1. Clone this repo into your directory.
 1. For Mac:
@@ -45,12 +63,15 @@ Another thing is that this will be a good real-life example of how stacks work i
 ## Updating and Fetching Dependencies
 1. Sometimes libraries update, and we may need to update them. If there is a case we do need to update, then the following steps are simple.
 1. First, you want to fetch the dependencies. To fetch, do `vapor fetch` on the project directory.
-1. Afterwards, do `vapor update`. It may take some time.
 1. Once done, do `vapor xcode -y` to regenerate the xcode project file contents.
+
+## Installation
+1. clone this repo, and branch off of `staging`. 
+1. do `vapor xcode -y` to generate your xcode project.
 
 ## Contributing
 [Please see here](https://github.com/MAD-Club/web/blob/master/CONTRIBUTING.md)
 
 ## Updated
 
-**Last Updated:** Nov. 5 2017
+**Last Updated:** Nov. 6 2017
