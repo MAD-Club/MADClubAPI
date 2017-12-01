@@ -8,14 +8,13 @@
 import Vapor
 import HTTP
 
-public final class UserController {
-	/**
-		Function that add routes from the usercontroller class. This is where we create our routes based on the controller.
-	*/
-	public func addRoutes(_ builder: RouteBuilder) {
-		
-	}
+public final class UserController: ResourceRepresentable {
+  
+  public init() { }
+  
+  public func makeResource() -> Resource<User> {
+    return Resource()
+  }
 }
 
-
-
+extension UserController: EmptyInitializable { }
