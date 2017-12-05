@@ -1,0 +1,7 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club }
+
+#export("content") {
+  <p>Hello World!</p>
+}
