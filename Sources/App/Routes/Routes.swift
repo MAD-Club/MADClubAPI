@@ -11,6 +11,7 @@ import HTTP
 extension Droplet {
   public func setupRoutes() throws {
     //: MARK - API V1 Collection
-    try collection(V1Collection.self)
+    // we'll pass the views in here too
+    try collection(V1Collection(view))
   }
 }
