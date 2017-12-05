@@ -10,6 +10,8 @@ Another thing is that this will be a good real-life example of how stacks work i
 ## Tutorials?
 Coming soon! In the meantime, you can view [Ray Wenderlich's ScreenCast of Vapor](https://videos.raywenderlich.com/screencasts). It's outdated with Vapor 1, but the concepts are the same, however the syntax is a little bit different. I'll host up screencasts soon.
 
+There is currently a workshop coming up soon, provided with screencasts as well. Stay tuned.
+
 ## Current Swift Version
 - Swift 4.0
 
@@ -27,7 +29,7 @@ Coming soon! In the meantime, you can view [Ray Wenderlich's ScreenCast of Vapor
 #### Homebrew Version (recommended):
 1. Installing on MacOS requires you to use Homebrew. [https://brew.sh/](https://brew.sh/)
 1. Once done, installing PostgreSQL is simple. Open up Terminal and do `brew install postgresql`, and you should be set-up.
-1. Once done, do `createdb ``whoami`` `. This creates a database based on your name.
+1. Once done, do `createdb whoami `. This creates a database based on your name.
 1. Run `psql` on the terminal, and you should see that you are able to connect.
 1. By default, your username is your username on the terminal, and your password is blank. You can set this up later, as it's your development environment, so it shouldn't matter too much.
 #### GUI Version:
