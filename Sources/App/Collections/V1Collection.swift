@@ -19,11 +19,11 @@ public final class V1Collection: RouteCollection {
     // this sets us up for our collection of routes to start building
     let api = builder.grouped("api", "v1")
     
-    //: MARK - UserController
+    // MARK: - UserController
     let userController = UserController()
     api.resource("users", userController)
   
-    //: MARK - HomeController
+    // MARK: - HomeController
     let homeController = HomeController(view)
     builder.get("/", handler: homeController.index)
   }
