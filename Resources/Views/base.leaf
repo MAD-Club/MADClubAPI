@@ -18,8 +18,9 @@
     <link rel="stylesheet" href="/css/index.css" />
   </head>
   <body>
-
-    #import("content")
-
+    <div class="container-fluid">
+      #embed("header")
+      #import("content")
+    </div>
   </body>
 </html>
