@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>#import("title")</title>
-    <!-- <link rel="stylesheet" href="/styles/app.css"> -->
+    <meta name="keywords" content="Java,Kotlin,Swift,iOS,Android,MAD,Mobile,Developers">
+    <meta name="author" content="St. Clair MAD Club">
+    <meta name="description" content="Mobile App Club for St. Clair College Students">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/index.css" />
   </head>
   <body>
 
