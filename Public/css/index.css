@@ -3,3 +3,7 @@
  Copyright St. Clair College & St. Clair MAD Club
  Last Modified: Dec. 17 2017
 */
+
+body, html {
+  font-family: 'Roboto', sans-serif;
+}
