@@ -16,7 +16,7 @@ let package = Package(
     .package(url: "https://github.com/vapor-community/sendgrid-provider.git", .upToNextMajor(from: "2.2.1"))
 	],
 	targets: [
-		.target(name: "App", dependencies: ["Vapor", "FluentProvider", "PostgreSQLProvider", "LeafProvider"],
+		.target(name: "App", dependencies: ["Vapor", "FluentProvider", "PostgreSQLProvider", "LeafProvider", "SendGridProvider"],
 						exclude: [
 							"Config",
 							"Public",
