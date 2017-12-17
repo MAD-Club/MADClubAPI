@@ -18,9 +18,11 @@
     <link rel="stylesheet" href="/css/index.css" />
   </head>
   <body>
-    <div class="container-fluid">
-      #embed("header")
+    #embed("header")
+    <div class="container">
       #import("content")
     </div>
+    #embed("footer")
+    <script src="/js/index.js"></script>
   </body>
 </html>
