@@ -47,7 +47,7 @@ extension Event: Preparation {
     try database.create(self) { event in
       event.id()
       event.string("title")
-      event.string("content")
+      event.custom("content", type: "TEXT")
     }
   }
   

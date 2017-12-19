@@ -8,6 +8,7 @@
 import Foundation
 import Vapor
 import Console
+import PostgreSQL
 
 public final class SeedCommand: Command {
   public let id = "seed"
@@ -42,8 +43,8 @@ public final class SeedCommand: Command {
       do {
         try eventObject.save()
         console.print("Added event: \(eventObject.title)-\(eventObject.id ?? 0)")
-      } catch let error {
-        console.print("Could not save event: \(error.localizedDescription)")
+      } catch let error as PostgreSQLError {
+        console.print("Could not save event: \(error.reason)")
       }
     }
   }

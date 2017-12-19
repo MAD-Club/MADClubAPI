@@ -29,6 +29,6 @@ public final class EventController {
   public func index(_ req: Request) throws -> ResponseRepresentable {
     let events = try Event.all()
     
-    return try view.make("events", ["events": events])
+    return try view.make("events", ["events": events.makeJSON()])
   }
 }
