@@ -8,24 +8,27 @@
 import Vapor
 import HTTP
 
-public final class EventController: ResourceRepresentable, EmptyInitializable {
+public final class EventController {
   
-  public init() { }
+  private let view: ViewRenderer
   
-  public func index(_ req: Request) throws -> ResponseRepresentable {
-    
+  public init(_ view: ViewRenderer) {
+    self.view = view
   }
   
-  public func makeResource() -> Resource<Event> {
-    return Resource(
-      index: index
-//      create: <#T##Resource.Multiple?##Resource.Multiple?##(Request) throws -> ResponseRepresentable#>,
-//      store: <#T##Resource.Multiple?##Resource.Multiple?##(Request) throws -> ResponseRepresentable#>,
-//      show: <#T##((Request, _) throws -> ResponseRepresentable)?##((Request, _) throws -> ResponseRepresentable)?##(Request, _) throws -> ResponseRepresentable#>,
-//      edit: <#T##((Request, _) throws -> ResponseRepresentable)?##((Request, _) throws -> ResponseRepresentable)?##(Request, _) throws -> ResponseRepresentable#>,
-//      update: <#T##((Request, _) throws -> ResponseRepresentable)?##((Request, _) throws -> ResponseRepresentable)?##(Request, _) throws -> ResponseRepresentable#>,
-//      replace: <#T##((Request, _) throws -> ResponseRepresentable)?##((Request, _) throws -> ResponseRepresentable)?##(Request, _) throws -> ResponseRepresentable#>,
-//      destroy: <#T##((Request, _) throws -> ResponseRepresentable)?##((Request, _) throws -> ResponseRepresentable)?##(Request, _) throws -> ResponseRepresentable#>
-    )
+  /**
+    An API Call for JSON
+  **/
+  public func all(_ req: Request) throws -> ResponseRepresentable {
+    return try Event.all().makeJSON()
+  }
+  
+  /**
+   Returns the page on the web
+  **/
+  public func index(_ req: Request) throws -> ResponseRepresentable {
+    let events = try Event.all()
+    
+    return try view.make("events", ["events": events])
   }
 }
