@@ -31,5 +31,6 @@ extension Config {
   private func setupPreparations() throws {
     preparations.append(Migration.self)
     preparations.append(Event.self)
+    preparations.append(Asset.self)
   }
 }
