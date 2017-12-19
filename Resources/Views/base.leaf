@@ -20,6 +20,7 @@
   </head>
   <body>
     #embed("header")
+    #import("carousel")
     <div class="container">
       #import("content")
     </div>
