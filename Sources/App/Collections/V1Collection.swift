@@ -16,12 +16,18 @@ public final class V1Collection: RouteCollection {
   }
   
   public func build(_ builder: RouteBuilder) throws {
-    // this sets us up for our collection of routes to start building
     let api = builder.grouped("api", "v1")
     
-    // MARK: - UserController
-    let userController = UserController()
-    api.resource("users", userController)
+    // MARK: - EventController
+    let eventController = EventController(view)
+    
+    // MARK: Events API
+    let eventsAPI = api.grouped("events")
+    eventsAPI.get("/", handler: eventController.all)
+    
+    // MARK: Events Web View
+    let events = builder.grouped("events")
+    events.get("/", handler: eventController.index)
   
     // MARK: - HomeController
     let homeController = HomeController(view)
