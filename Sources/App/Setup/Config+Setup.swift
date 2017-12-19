@@ -11,6 +11,7 @@ extension Config {
     
     try setupProviders()
     try setupPreparations()
+    addConfigurables()
   }
   
   /// Configure providers
@@ -19,6 +20,10 @@ extension Config {
     try addProvider(PostgreSQLProvider.Provider.self)
     try addProvider(LeafProvider.Provider.self)
     try addProvider(SendGridProvider.Provider.self)
+  }
+  
+  private func addConfigurables() {
+    addConfigurable(command: SeedCommand.init, name: "seed")
   }
   
   /// Add all models that should have their
