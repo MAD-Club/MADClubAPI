@@ -45,7 +45,7 @@ public class KloudlessService {
      - fileName: String value, used to get the file name
      - file: The actual contents of the file, it'll be loaded into GDrive
   **/
-  public func uploadFile(fileName: String, file: Data) throws -> ResponseRepresentable {
+  public func uploadFile(fileName: String, file: Data) throws -> JSON {
     guard let parentId = try createFolder() else {
       throw Abort(.forbidden, reason: "Could not get the item!")
     }
@@ -65,7 +65,8 @@ public class KloudlessService {
     // create the header
     let headers: [HeaderKey: String] = [
       .authorization: "APIKey \(apiKey)",
-      HeaderKey.contentLength: "\(file.count)",
+      .contentType: "application/octet-stream",
+      .contentLength: "\(file.count)",
       HeaderKey(stringLiteral: "X-Kloudless-Metadata"): jsonString
     ]
     
@@ -75,9 +76,52 @@ public class KloudlessService {
       headers: headers
     )
     
-    let response = try EngineClient.factory.respond(to: request)
+    let client = try EngineClient.factory.respond(to: request)
+    guard let responseJSON = client.json else { throw Abort.badRequest }
     
-    return response
+    // create a downloadable link for us
+    let downloadableLinkJSON = try createDownloadableLink(fileId: responseJSON.get("id"))
+    let asset = try Asset(
+      url: downloadableLinkJSON.get("url"),
+      type: responseJSON.get("mime_type"),
+      size: responseJSON.get("size"),
+      fileId: responseJSON.get("id")
+    )
+    
+    try asset.save()
+    
+    return try asset.makeJSON()
+  }
+  
+  /**
+   Creates a url path for us to use as the image source
+  **/
+  private func createDownloadableLink(fileId: String) throws -> JSON {
+    let linkPath = "\(baseUrl)/accounts/\(accountId)/storage/links/"
+    
+    // create header
+    let headers: [HeaderKey: String] = [
+      .authorization: "APIKey \(apiKey)",
+      .contentType: "application/json"
+    ]
+    
+    // create body response
+    var json = JSON()
+    try json.set("file_id", fileId)
+    try json.set("direct", true)
+    
+    // create request
+    let request = Request(
+      method: .post,
+      uri: linkPath,
+      headers: headers,
+      body: json.makeBody()
+    )
+    
+    let client = try EngineClient.factory.respond(to: request)
+    guard let responseJSON = client.json else { throw Abort(.badRequest, reason: "Could not get retrieve contents!") }
+    
+    return responseJSON
   }
   
   /**

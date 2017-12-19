@@ -14,6 +14,7 @@ public final class Asset: Model, Timestampable {
   public var url: String
   public var type: String
   public var size: Int64
+  public var fileId: String
   
   // MARK: Storage
   public let storage: Storage = Storage()
@@ -26,16 +27,18 @@ public final class Asset: Model, Timestampable {
      - type: String - The file type
      - size: Int64 - The file size
   **/
-  public init(url: String, type: String, size: Int64) {
+  public init(url: String, type: String, size: Int64, fileId: String) {
     self.url = url
     self.type = type
     self.size = size
+    self.fileId = fileId
   }
   
   public init(row: Row) throws {
     url = try row.get("url")
     type = try row.get("type")
     size = try row.get("size")
+    fileId = try row.get("fileId")
   }
   
   public func makeRow() throws -> Row {
@@ -43,6 +46,7 @@ public final class Asset: Model, Timestampable {
     try row.set("url", url)
     try row.set("type", type)
     try row.set("size", size)
+    try row.set("fileId", fileId)
     return row
   }
 }
@@ -55,6 +59,7 @@ extension Asset: Preparation {
       asset.string("url")
       asset.string("type")
       asset.string("size")
+      asset.string("fileId")
     }
   }
   
