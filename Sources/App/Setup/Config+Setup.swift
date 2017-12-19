@@ -32,5 +32,6 @@ extension Config {
     preparations.append(Migration.self)
     preparations.append(Event.self)
     preparations.append(Asset.self)
+    preparations.append(Gallery.self)
   }
 }
