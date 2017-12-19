@@ -3,8 +3,11 @@
 #export("title") { St. Clair MAD Club Events }
 
 #export("content") {
-  <p>HEY</p>
   #loop(events, "event") {
-    <p>#(event.title) - Wee</p>
+    <div class="row mt-2">
+      <h1 class="col-sm-12">#(event.title)</h1>
+      <p class="col-sm-12">Created At: #dateformat(event.createdAt) | Last Updated: #dateformat(event.updatedAt)</p>
+      <p class="col-sm-12">#(event.content)</p>
+    </div>
   }
 }

@@ -7,6 +7,7 @@
 
 import Vapor
 import HTTP
+import Foundation
 
 public final class EventController {
   
