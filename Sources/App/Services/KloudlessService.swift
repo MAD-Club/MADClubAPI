@@ -13,13 +13,18 @@ public class KloudlessService {
   //MARK: Properties
   private let apiKey: String
   private let appId: String
+  private let accountId: Int
+  
+  //MARK: Private properties
+  private let baseUrl: String = "https://api.kloudless.com/v1"
   
   /**
    Sets up the API keys from initializing
   **/
-  public init(appId: String, apiKey: String) {
+  public init(appId: String, apiKey: String, accountId: Int) {
     self.appId = appId
     self.apiKey = apiKey
+    self.accountId = accountId
   }
   
   /**
@@ -28,7 +33,69 @@ public class KloudlessService {
   public convenience init(config: Config) throws {
     self.init(
       appId: try config.get("appId"),
-      apiKey: try config.get("apiKey")
+      apiKey: try config.get("apiKey"),
+      accountId: try config.get("accountId")
     )
+  }
+  
+  /**
+   Uploads a file, based on the set parameters
+   
+   - parameters:
+     - fileName: String value, used to get the file name
+     - file: The actual contents of the file, it'll be loaded into GDrive
+  **/
+  public func uploadFile(fileName: String, file: Data) throws -> ResponseRepresentable {
+    guard let parentId = try createFolder() else {
+      throw Abort(.forbidden, reason: "Could not get the item!")
+    }
+    
+    let fileUploadUrl = "\(baseUrl)/accounts/\(accountId)/storage/files"
+    
+    // create json to put in headers
+    var json = JSON()
+    try json.set("name", fileName)
+    try json.set("parent_id", parentId)
+    
+    // turn into a string
+    guard let jsonString = json.makeBody().bytes?.makeString() else {
+      throw Abort(.internalServerError, reason: "Could not successfully convert into a string value JSON")
+    }
+    
+    // create the header
+    let headers: [HeaderKey: String] = [
+      .authorization: "APIKey \(apiKey)",
+      HeaderKey.contentLength: "\(file.count)",
+      HeaderKey(stringLiteral: "X-Kloudless-Metadata"): jsonString
+    ]
+    
+    let request = Request(
+      method: .get,
+      uri: fileUploadUrl,
+      headers: headers
+    )
+    
+    let response = try EngineClient.factory.respond(to: request)
+    
+    return response
+  }
+  
+  /**
+   This creates a folder for organizing. Once created, it'll return us the parentId or folderId
+   
+   - returns: Parent Folder Id
+  **/
+  private func createFolder() throws -> Int? {
+    let storageUrl = "\(baseUrl)/accounts/\(accountId)/storage/folders"
+    
+    // Setup the request
+    let request = Request(
+      method: .post,
+      uri: storageUrl,
+      headers: ["Content-type": "application/json"]
+    )
+    
+    let reponse = try EngineClient.factory.respond(to: request)
+    return reponse.json?["id"]?.int
   }
 }
