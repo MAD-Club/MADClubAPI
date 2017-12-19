@@ -1,0 +1,10 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club Events }
+
+#export("content") {
+  <p>HEY</p>
+  #loop(events, "event") {
+    <p>#(event.title) - Wee</p>
+  }
+}

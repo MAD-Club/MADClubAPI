@@ -41,6 +41,7 @@ public final class SeedCommand: Command {
       
       do {
         try eventObject.save()
+        console.print("Added event: \(eventObject.title)-\(eventObject.id ?? 0)")
       } catch let error {
         console.print("Could not save event: \(error.localizedDescription)")
       }
