@@ -14,13 +14,21 @@ public final class SeedCommand: Command {
   public let help = ["Prepares initial data for seeding."]
   public let console: ConsoleProtocol
   
-  public init(console: ConsoleProtocol) {
+  private let environment: Environment
+  
+  public init(console: ConsoleProtocol, environment: Environment) {
     self.console = console
   }
   
-  public func run(arguments: [String]) throws {
-    console.print("running custom command...")
+  fileprivate func prepareEvents() {
     
+  }
+  
+  public func run(arguments: [String]) throws {
+    console.print("Running seed command...")
+    if environment == .development {
+      
+    }
   }
 }
 
@@ -28,8 +36,6 @@ public final class SeedCommand: Command {
 extension SeedCommand: ConfigInitializable {
   public convenience init(config: Config) throws {
     let console = try config.resolveConsole()
-    // we set up our seeding files in here too
-    // config["seed", ""] whatever
-    self.init(console: console)
+    self.init(console: console, environment: config.environment)
   }
 }
