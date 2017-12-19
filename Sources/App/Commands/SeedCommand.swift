@@ -15,19 +15,42 @@ public final class SeedCommand: Command {
   public let console: ConsoleProtocol
   
   private let environment: Environment
+  private let events: [Config]?
   
-  public init(console: ConsoleProtocol, environment: Environment) {
+  public init(console: ConsoleProtocol, config: Config) {
     self.console = console
+    self.environment = config.environment
+    events = config["seed", "events"]?.array
   }
   
-  fileprivate func prepareEvents() {
+  /**
+    Prepares the Events Seeding
+  **/
+  fileprivate func prepareEvents() throws {
+    console.print("Beginning to add events..")
+    guard let events = events else {
+      console.print("Could not get retrieve events!")
+      return
+    }
     
+    try events.forEach { event in
+      let title: String = try event.get("title")
+      let content: String = try event.get("content")
+      // Create event
+      let eventObject = Event(title: title, content: content)
+      
+      do {
+        try eventObject.save()
+      } catch let error {
+        console.print("Could not save event: \(error.localizedDescription)")
+      }
+    }
   }
   
   public func run(arguments: [String]) throws {
     console.print("Running seed command...")
     if environment == .development {
-      
+      try prepareEvents()
     }
   }
 }
@@ -36,6 +59,6 @@ public final class SeedCommand: Command {
 extension SeedCommand: ConfigInitializable {
   public convenience init(config: Config) throws {
     let console = try config.resolveConsole()
-    self.init(console: console, environment: config.environment)
+    self.init(console: console, config: config)
   }
 }
