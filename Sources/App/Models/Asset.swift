@@ -76,6 +76,7 @@ extension Asset: JSONRepresentable {
     try json.set("url", url)
     try json.set("type", type)
     try json.set("size", size)
+    try json.set("fileId", fileId)
     try json.set("createdAt", createdAt)
     try json.set("updatedAt", updatedAt)
     return json

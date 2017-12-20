@@ -39,17 +39,55 @@ public class KloudlessService {
   }
   
   /**
-   Uploads a file, based on the set parameters
-   
+   Uploads a video to Google Drive, and attempts to create a direct link from Kloudless.
    - parameters:
-     - fileName: String value, used to get the file name
-     - file: The actual contents of the file, it'll be loaded into GDrive
+   - fileName: String - the filename of the file
+   - file: Bytes - Wrapper for Bytes, in a BodyRepresentable
+   **/
+  public func uploadVideo(fileName: String, file: Bytes) throws -> JSON {
+    guard let parentId = try createFolder(fileType: .images) else {
+      throw Abort(.forbidden, reason: "Could not get the item!")
+    }
+    
+    return try upload(fileName: fileName, file: file, parentId: parentId)
+  }
+  
+  /**
+   Uploads a document to Google Drive, and attempts to create a direct link from Kloudless.
+   - parameters:
+   - fileName: String - the filename of the file
+   - file: Bytes - Wrapper for Bytes, in a BodyRepresentable
+   **/
+  public func uploadDocument(fileName: String, file: Bytes) throws -> JSON {
+    guard let parentId = try createFolder(fileType: .documents) else {
+      throw Abort(.forbidden, reason: "Could not get the item!")
+    }
+    
+    return try upload(fileName: fileName, file: file, parentId: parentId)
+  }
+  
+  /**
+    Uploads an image to Google Drive, and attempts to create a direct link from Kloudless.
+   - parameters:
+     - fileName: String - the filename of the file
+     - file: Bytes - Wrapper for Bytes, in a BodyRepresentable
   **/
   public func uploadImage(fileName: String, file: Bytes) throws -> JSON {
     guard let parentId = try createFolder(fileType: .images) else {
       throw Abort(.forbidden, reason: "Could not get the item!")
     }
     
+    return try upload(fileName: fileName, file: file, parentId: parentId)
+  }
+  
+  /**
+   Uploads a file, based on the set parameters
+   
+   - parameters:
+     - fileName: String value, used to get the file name
+     - file: The actual contents of the file, it'll be loaded into GDrive
+  **/
+  private func upload(fileName: String, file: Bytes, parentId: String) throws -> JSON {
     let fileUploadUrl = "\(baseUrl)/accounts/\(accountId)/storage/files"
     
     // create json to put in headers
