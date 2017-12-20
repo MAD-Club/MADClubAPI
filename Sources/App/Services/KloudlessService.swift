@@ -118,6 +118,7 @@ public class KloudlessService {
     // create a downloadable link for us
     let downloadableLinkJSON = try createDownloadableLink(fileId: responseJSON.get("id"))
     let asset = try Asset(
+      fileName: fileName,
       url: downloadableLinkJSON.get("url"),
       type: responseJSON.get("mime_type"),
       size: responseJSON.get("size"),

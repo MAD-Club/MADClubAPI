@@ -11,6 +11,7 @@ import FluentProvider
 
 public final class Asset: Model, Timestampable {
   //MARK: Properties
+  public var fileName: String
   public var url: String
   public var type: String
   public var size: Int64
@@ -23,11 +24,14 @@ public final class Asset: Model, Timestampable {
     Creates an asset model, that's referenced from a file storage or our own API
    
    - parameters:
+     - fileName: the filename
      - url: String - the url path for the file
      - type: String - The file type
      - size: Int64 - The file size
+     - fileId: String - The fileId from Kloudless API
   **/
-  public init(url: String, type: String, size: Int64, fileId: String) {
+  public init(fileName: String, url: String, type: String, size: Int64, fileId: String) {
+    self.fileName = fileName
     self.url = url
     self.type = type
     self.size = size
@@ -35,6 +39,7 @@ public final class Asset: Model, Timestampable {
   }
   
   public init(row: Row) throws {
+    fileName = try row.get("fileName")
     url = try row.get("url")
     type = try row.get("type")
     size = try row.get("size")
@@ -43,6 +48,7 @@ public final class Asset: Model, Timestampable {
   
   public func makeRow() throws -> Row {
     var row = Row()
+    try row.set("fileName", fileName)
     try row.set("url", url)
     try row.set("type", type)
     try row.set("size", size)
@@ -56,6 +62,7 @@ extension Asset: Preparation {
   public static func prepare(_ database: Database) throws {
     try database.create(self) { asset in
       asset.id()
+      asset.string("fileName")
       asset.string("url")
       asset.string("type")
       asset.string("size")
@@ -73,6 +80,7 @@ extension Asset: JSONRepresentable {
   public func makeJSON() throws -> JSON {
     var json = JSON()
     try json.set("id", id)
+    try json.set("fileName", fileName)
     try json.set("url", url)
     try json.set("type", type)
     try json.set("size", size)

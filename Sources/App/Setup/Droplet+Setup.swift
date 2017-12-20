@@ -14,6 +14,7 @@ extension Droplet {
   private func prepareStems() {
     if let leaf = view as? LeafRenderer {
       leaf.stem.register(DateFormat())
+      leaf.stem.register(IndexObject())
     }
   }
 }
