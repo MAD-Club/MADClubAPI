@@ -8,13 +8,6 @@
 import Vapor
 import HTTP
 
-public final class UserController: ResourceRepresentable {
-  
-  public init() { }
-  
-  public func makeResource() -> Resource<User> {
-    return Resource()
-  }
-}
+public final class UserController {
 
-extension UserController: EmptyInitializable { }
+}
