@@ -41,6 +41,13 @@ public final class Event: Model, Timestampable {
   }
 }
 
+//MARK: Event
+extension Event {
+  public var galleries: Siblings<Event, Asset, Pivot<Event, Asset>> {
+    return siblings()
+  }
+}
+
 //MARK: Preparation - Setting up Database
 extension Event: Preparation {
   public static func prepare(_ database: Database) throws {
@@ -61,6 +68,7 @@ extension Event: JSONRepresentable {
   public func makeJSON() throws -> JSON {
     var json = JSON()
     try json.set("id", id)
+    try json.set("galleries", galleries.all().makeJSON())
     try json.set("title", title)
     try json.set("content", content)
     // we can show the createdAt/UpdatedAt because of the Timestampable protocol

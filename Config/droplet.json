@@ -32,7 +32,8 @@
     "middleware": [
         "error",
         "date",
-        "file"
+        "file",
+        "sessions"
     ],
 
     "//": "Choose which commands this application can run",
@@ -43,5 +44,6 @@
     ],
 	
 		"view": "leaf",
-    "mail": "sendgrid"
+    "mail": "sendgrid",
+    "sessions": "memory"
 }

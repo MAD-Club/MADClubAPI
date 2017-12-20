@@ -18,6 +18,10 @@ public final class V1Collection: RouteCollection {
   public func build(_ builder: RouteBuilder) throws {
     let api = builder.grouped("api", "v1")
     
+    // MARK: - Assets Controller
+    let assetsController = AssetController()
+    api.grouped(AuthenticateMiddleware()).resource("assets", assetsController)
+    
     // MARK: - EventController
     let eventController = EventController(view)
     
