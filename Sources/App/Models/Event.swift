@@ -43,8 +43,8 @@ public final class Event: Model, Timestampable {
 
 //MARK: Event
 extension Event {
-  public var galleries: Children<Event, Gallery> {
-    return children()
+  public var galleries: Siblings<Event, Asset, Pivot<Event, Asset>> {
+    return siblings()
   }
 }
 
