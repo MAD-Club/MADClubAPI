@@ -6,17 +6,78 @@
 //
 
 import Vapor
+import BCrypt
 import FluentProvider
 
-public final class User: Model {
+public final class User: Model, Timestampable {
+  //MARK: Properties
+  public var email: String
+  public var password: String
+  public var admin: Bool = false
+  public var subscribed: Bool = false
+  
 	public var storage: Storage = Storage()
 	
+  /**
+   Creates a `User` object, used for authenticating specific purposes
+   
+   - parameters:
+     - email: The email used for login
+     - password: Password to login
+     - admin: boolean value to check for specific access
+     - subscribed: subscription service to newsletters or upcoming news
+  **/
+  public init(email: String, password: String, admin: Bool = false, subscribed: Bool = false) throws {
+    self.email = email
+    self.password = try Hash.make(message: password).makeString()
+    self.admin = admin
+    self.subscribed = subscribed
+  }
+  
 	public init(row: Row) throws {
-    
+    email = try row.get("email")
+    password = try row.get("password")
+    admin = try row.get("admin")
+    subscribed = try row.get("subscribed")
 	}
 	
 	public func makeRow() throws -> Row {
 		var row = Row()
+    try row.set("email", email)
+    try row.set("password", password)
+    try row.set("admin", admin)
+    try row.set("subscribed", subscribed)
 		return row
 	}
+}
+
+//MARK: Preparation
+extension User: Preparation {
+  public static func prepare(_ database: Database) throws {
+    try database.create(self) { user in
+      user.id()
+      user.string("email")
+      user.string("password")
+      user.bool("admin", default: false)
+      user.bool("subscribed", default: false)
+    }
+  }
+  
+  public static func revert(_ database: Database) throws {
+    try database.delete(self)
+  }
+}
+
+//MARK: JSONRepresentable
+extension User: JSONRepresentable {
+  public func makeJSON() throws -> JSON {
+    var json = JSON()
+    try json.set("id", id)
+    try json.set("email", email)
+    try json.set("admin", admin)
+    try json.set("subscribed", subscribed)
+    try json.set("createdAt", createdAt)
+    try json.set("updatedAt", updatedAt)
+    return json
+  }
 }

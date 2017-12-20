@@ -33,5 +33,6 @@ extension Config {
     preparations.append(Event.self)
     preparations.append(Asset.self)
     preparations.append(Gallery.self)
+    preparations.append(User.self)
   }
 }
