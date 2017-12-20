@@ -49,6 +49,13 @@ public final class SeedCommand: Command {
     }
   }
   
+  /**
+    Prepares the users seeding based on the environments given
+   **/
+  fileprivate func prepareUsers() throws {
+    
+  }
+  
   public func run(arguments: [String]) throws {
     console.print("Running seed command...")
     if environment == .development {
