@@ -45,8 +45,8 @@ public class KloudlessService {
      - fileName: String value, used to get the file name
      - file: The actual contents of the file, it'll be loaded into GDrive
   **/
-  public func uploadFile(fileName: String, file: Data) throws -> JSON {
-    guard let parentId = try createFolder() else {
+  public func uploadImage(fileName: String, file: Bytes) throws -> JSON {
+    guard let parentId = try createFolder(fileType: .images) else {
       throw Abort(.forbidden, reason: "Could not get the item!")
     }
     
@@ -58,22 +58,20 @@ public class KloudlessService {
     try json.set("parent_id", parentId)
     
     // turn into a string
-    guard let jsonString = json.makeBody().bytes?.makeString() else {
-      throw Abort(.internalServerError, reason: "Could not successfully convert into a string value JSON")
-    }
+    let jsonString = try json.serialize().makeString()
     
     // create the header
     let headers: [HeaderKey: String] = [
       .authorization: "APIKey \(apiKey)",
       .contentType: "application/octet-stream",
-      .contentLength: "\(file.count)",
-      HeaderKey(stringLiteral: "X-Kloudless-Metadata"): jsonString
+      "X-Kloudless-Metadata": jsonString
     ]
     
     let request = Request(
-      method: .get,
+      method: .post,
       uri: fileUploadUrl,
-      headers: headers
+      headers: headers,
+      body: Body.data(file).makeBody()
     )
     
     let client = try EngineClient.factory.respond(to: request)
@@ -129,17 +127,37 @@ public class KloudlessService {
    
    - returns: Parent Folder Id
   **/
-  private func createFolder() throws -> Int? {
+  private func createFolder(fileType type: FileType) throws -> String? {
     let storageUrl = "\(baseUrl)/accounts/\(accountId)/storage/folders"
+    
+    var json = JSON()
+    try json.set("name", "madclub-\(type.rawValue)")
+    try json.set("parent_id", "root")
+    
+    let headers: [HeaderKey: String] = [
+      .contentType: "application/json",
+      .authorization: "APIKey \(apiKey)"
+    ]
     
     // Setup the request
     let request = Request(
       method: .post,
       uri: storageUrl,
-      headers: ["Content-type": "application/json"]
+      headers: headers,
+      body: json.makeBody()
     )
     
-    let reponse = try EngineClient.factory.respond(to: request)
-    return reponse.json?["id"]?.int
+    let response = try EngineClient.factory.respond(to: request)
+
+    return response.json?["id"]?.string
+  }
+}
+
+// MARK: Enum
+extension KloudlessService {
+  public enum FileType: String {
+    case images
+    case documents
+    case videos
   }
 }
