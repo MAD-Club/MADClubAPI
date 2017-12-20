@@ -41,8 +41,10 @@ public final class AssetController: ResourceRepresentable {
     switch fileType {
     case .images:
       results = try kloudless.uploadImage(fileName: fileName, file: file)
-    default:
-      results = JSON()
+    case .documents:
+      results = try kloudless.uploadDocument(fileName: fileName, file: file)
+    case .videos:
+      results = try kloudless.uploadVideo(fileName: fileName, file: file)
     }
 
     return results
