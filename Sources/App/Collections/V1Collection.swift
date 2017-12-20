@@ -20,7 +20,7 @@ public final class V1Collection: RouteCollection {
     
     // MARK: - Assets Controller
     let assetsController = AssetController()
-    api.resource("assets", assetsController)
+    api.grouped(AuthenticateMiddleware()).resource("assets", assetsController)
     
     // MARK: - EventController
     let eventController = EventController(view)
