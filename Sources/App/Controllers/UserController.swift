@@ -11,7 +11,7 @@ import HTTP
 import JWT
 import JWTProvider
 
-public final class UserController: ResourceRepresentable {
+public final class UserController {
   /**
     Logs the user in
   **/
@@ -50,14 +50,24 @@ public final class UserController: ResourceRepresentable {
     }
   }
   
+  /**
+    Shows all users
+   **/
   public func index(_ req: Request) throws -> ResponseRepresentable {
     return try User.all().makeJSON()
   }
   
-  public func show(_ req: Request, user: User) throws -> ResponseRepresentable {
+  /**
+    Showcases users
+   **/
+  public func show(_ req: Request) throws -> ResponseRepresentable {
+    let user = try req.user()
     return try user.makeJSON()
   }
   
+  /**
+    Creates a user for us
+   **/
   public func store(_ req: Request) throws -> ResponseRepresentable {
     guard
       let email = req.data["email"]?.string,
@@ -75,29 +85,46 @@ public final class UserController: ResourceRepresentable {
     return Response(redirect: "/")
   }
   
-  public func update(_ req: Request, user: User) throws -> ResponseRepresentable {
-    user.email = req.data["email"]?.string ?? user.email
+  /**
+    Makes changes to a specific user, based on the id
+  **/
+  public func update(_ req: Request) throws -> ResponseRepresentable {
+    let user = try req.user()
     
+    // change up user passwords
+    if let email = req.data["email"]?.string {
+      guard !email.isEmpty else { throw Abort(.conflict, reason: "Email address cannot be empty!") }
+      user.email = email
+    }
     if let password = req.data["password"]?.string {
+      guard !password.isEmpty else { throw Abort(.conflict, reason: "Password can't be empty!") }
       user.password = try Hash.make(message: password).makeString()
     }
     try user.save()
-    
+    // return back to the start
     return Response(redirect: "/")
   }
   
-  public func destroy(_ req: Request, user: User) throws -> ResponseRepresentable {
+  /**
+    Destroys the user, deletes the user from the database
+  **/
+  public func destroy(_ req: Request) throws -> ResponseRepresentable {
+    let user = try req.user()
     try user.delete()
     return Response(redirect: "/")
   }
-  
-  public func makeResource() -> Resource<User> {
-    return Resource(
-      index: index,
-      store: store,
-      show: show,
-      update: update,
-      destroy: destroy
-    )
+}
+
+extension Request {
+  fileprivate func user() throws -> User {
+    guard let userId = parameters["userId"]?.int else {
+      throw Abort.notFound
+    }
+    
+    guard let user = try User.find(userId) else {
+      throw Abort.notFound
+    }
+    
+    return user
   }
 }
