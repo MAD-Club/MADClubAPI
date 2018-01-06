@@ -12,7 +12,7 @@ import JWT
 import JWTProvider
 
 public final class UserController {
-  private var view: ViewRenderer
+  private let view: ViewRenderer
   
   public init(_ view: ViewRenderer) {
     self.view = view

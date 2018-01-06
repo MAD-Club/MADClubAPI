@@ -13,7 +13,7 @@ import HTTP
  *
 **/
 public final class HomeController {
-  let view: ViewRenderer
+  private let view: ViewRenderer
   
   public init(_ view: ViewRenderer) {
     self.view = view
