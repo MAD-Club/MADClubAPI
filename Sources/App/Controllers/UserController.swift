@@ -12,13 +12,31 @@ import JWT
 import JWTProvider
 
 public final class UserController {
+  private var view: ViewRenderer
+  
+  public init(_ view: ViewRenderer) {
+    self.view = view
+  }
+  
   /**
-    Logs the user in
+   LoginView
+  */
+  public func loginView(_ req: Request) throws -> ResponseRepresentable {
+    let session = try req.assertSession()
+    
+    if let _ = session.data["userId"]?.int {
+      return Response(redirect: "/")
+    }
+    
+    return try view.make("login")
+  }
+  
+  /**
+    Attempts to log the user in
   **/
-  public func login(_ req: Request) throws -> ResponseRepresentable {
-    guard let email = req.data["email"]?.string,
-          let password = req.data["password"]?.string else {
-      throw Abort.notFound
+  public func loginWebPost(_ req: Request) throws -> ResponseRepresentable {
+    guard let email = req.formURLEncoded?["email"]?.string, let password = req.formURLEncoded?["password"]?.string else {
+      return try view.make("login", ["error": "Invalid credentials!"])
     }
     
     guard let user = try User.makeQuery().filter("email", email.lowercased()).first() else {
@@ -30,24 +48,32 @@ public final class UserController {
     }
     
     // start the session call based if html or mobile
-    if req.accept.prefers("html") {
-      let session = try req.assertSession()
-      try session.data.set("userId", user.id?.int)
-      return Response(redirect: "/")
-    } else {
-      // use JWT --> 86400 = 1 Day expiration
-      var payload = JSON(ExpirationTimeClaim(createTimestamp: { Int(Date().timeIntervalSince1970) + 86400 }))
-      try payload.set("userId", user.id)
-      
-      // create jwt
-      guard let key = drop?.config["jwt", "login"]?.string else { throw Abort.serverError }
-      let jwt: JWT = try JWT(payload: payload, signer: HS512(key: key.bytes))
-      
-      var json = JSON()
-      try json.set("token", jwt.createToken())
-      
-      return json
+    let session = try req.assertSession()
+    try session.data.set("userId", user.id?.int)
+    return Response(redirect: "/")
+  }
+  
+  public func loginAPIPost(_ req: Request) throws -> ResponseRepresentable {
+    guard let email = req.json?["email"]?.string, let password = req.json?["password"]?.string else {
+      throw Abort.badRequest
     }
+    
+    guard let user = try User.makeQuery().filter("email", email.lowercased()).first() else {
+      throw Abort.notFound
+    }
+    
+    // use JWT --> 86400 = 1 Day expiration
+    var payload = JSON(ExpirationTimeClaim(createTimestamp: { Int(Date().timeIntervalSince1970) + 86400 }))
+    try payload.set("userId", user.id)
+    
+    // create jwt
+    guard let key = drop?.config["jwt", "login"]?.string else { throw Abort.serverError }
+    let jwt: JWT = try JWT(payload: payload, signer: HS512(key: key.bytes))
+    
+    var json = JSON()
+    try json.set("token", jwt.createToken())
+    
+    return json
   }
   
   /**
