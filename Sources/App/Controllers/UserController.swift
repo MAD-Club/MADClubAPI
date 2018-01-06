@@ -62,6 +62,10 @@ public final class UserController {
       throw Abort.notFound
     }
     
+    guard try Hash.verify(message: password, matches: user.password) else {
+      throw Abort(.forbidden, reason: "Invalid user credentials!")
+    }
+    
     // use JWT --> 86400 = 1 Day expiration
     var payload = JSON(ExpirationTimeClaim(createTimestamp: { Int(Date().timeIntervalSince1970) + 86400 }))
     try payload.set("userId", user.id)
