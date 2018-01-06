@@ -9,8 +9,8 @@ import Foundation
 import Vapor
 import FluentProvider
 
-// This is our "migration" app, this'll run before preparing other apps.
-public struct Migration: Preparation {
+/// This is our "migration" app, this'll run before preparing other apps.
+public struct UpdateDatabase: Preparation {
   public static func prepare(_ database: Database) throws {
     
   }
