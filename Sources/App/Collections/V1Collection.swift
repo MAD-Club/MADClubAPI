@@ -52,5 +52,6 @@ public final class V1Collection: RouteCollection {
     // MARK: - HomeController
     let homeController = HomeController(view)
     builder.get("/", handler: homeController.index)
+    builder.get("login", handler: homeController.login)
   }
 }

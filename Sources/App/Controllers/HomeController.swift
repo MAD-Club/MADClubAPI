@@ -25,4 +25,14 @@ public final class HomeController {
     
     return try view.make("index", ["event": event?.makeJSON()])
   }
+  
+  public func login(_ req: Request) throws -> ResponseRepresentable {
+    let session = try req.assertSession()
+    
+    if let _ = session.data["userId"]?.int {
+      return Response(redirect: "/")
+    }
+    
+    return try view.make("login")
+  }
 }

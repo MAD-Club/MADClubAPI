@@ -1,0 +1,8 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club Events }
+
+#export("content") {
+  <form method="POST">
+  </form>
+}
