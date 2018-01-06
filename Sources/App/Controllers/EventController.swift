@@ -30,6 +30,10 @@ public final class EventController {
   public func index(_ req: Request) throws -> ResponseRepresentable {
     let events = try Event.all()
     
-    return try view.make("events", ["events": events.makeJSON()])
+    // we're checking for a session in this case
+    var results = ["events": try events.makeJSON()]
+    try req.user(array: &results)
+    
+    return try view.make("events", results)
   }
 }

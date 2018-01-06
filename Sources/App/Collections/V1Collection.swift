@@ -18,6 +18,28 @@ public final class V1Collection: RouteCollection {
   public func build(_ builder: RouteBuilder) throws {
     let api = builder.grouped("api", "v1")
     
+    // MARK: - User Controller
+    let userController = UserController(view)
+    
+    // web
+    builder.group("users") { user in
+      user.group(AuthenticateMiddleware(), AdminMiddleware()) { auth in
+        auth.get("/", handler: userController.index)
+        auth.post("/", handler: userController.store)
+        auth.patch(":userId", handler: userController.update)
+        auth.delete(":userId", handler: userController.destroy)
+      }
+      user.get("login", handler: userController.loginView)
+      user.post("login", handler: userController.loginWebPost)
+    }
+    api.post("auth", "login", handler: userController.loginAPIPost)
+    
+    // api
+    api.grouped(AuthenticateMiddleware(), AdminMiddleware()).group("users") { user in
+      user.get("/", handler: userController.index)
+      user.get(":userId", handler: userController.show)
+    }
+  
     // MARK: - Assets Controller
     let assetsController = AssetController()
     api.grouped(AuthenticateMiddleware()).resource("assets", assetsController)

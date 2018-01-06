@@ -1,7 +1,7 @@
 /*
  Created by MAD Students
  Copyright St. Clair College & St. Clair MAD Club
- Last Modified: Dec. 17 2017
+ Last Modified: Jan. 5th 2018
 */
 
 body, html {
@@ -25,4 +25,32 @@ p { font-weight: 300; }
   height: auto;
 }
 
+#footerNav li a {
+  color: #ffffff;
+}
 
+
+/* Sticky footer styles
+ -------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px; /* Margin bottom by footer height */
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px;
+  background-color: #343A40;
+}
+
+.footer a {
+  padding: 0 15px;
+  color: #FFF;
+}

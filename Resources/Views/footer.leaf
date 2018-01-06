@@ -1,5 +1,7 @@
-<div class="row">
+<footer class="footer">
   <div class="container">
-    
+    <a href="#">FAQ</a>
+    <a href="#">Contact Us</a>
+    <a href="/users/login">Login</a>
   </div>
-</div>
+</footer>

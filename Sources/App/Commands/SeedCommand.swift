@@ -17,11 +17,13 @@ public final class SeedCommand: Command {
   
   private let environment: Environment
   private let events: [Config]?
+  private let user: [String: Config]?
   
   public init(console: ConsoleProtocol, config: Config) {
     self.console = console
     self.environment = config.environment
     events = config["seed", "events"]?.array
+    user = config["seed", "user"]?.object
   }
   
   /**
@@ -49,10 +51,23 @@ public final class SeedCommand: Command {
     }
   }
   
+  /**
+    Prepares the users seeding based on the environments given
+   **/
+  fileprivate func prepareUser() throws {
+    console.print("adding test user")
+    if let user = user, let email = user["email"]?.string, let password = user["password"]?.string {
+      let userObject = try? User(email: email, password: password)
+      try? userObject?.save()
+      console.print("user saved!")
+    }
+  }
+  
   public func run(arguments: [String]) throws {
     console.print("Running seed command...")
     if environment == .development {
       try prepareEvents()
+      try prepareUser()
     }
   }
 }
