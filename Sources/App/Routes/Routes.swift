@@ -13,5 +13,6 @@ extension Droplet {
     // MARK: - API V1 Collection
     // we'll pass the views in here too
     try collection(V1Collection(view))
+    try collection(WebCollection(view))
   }
 }
