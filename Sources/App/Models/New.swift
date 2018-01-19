@@ -9,7 +9,7 @@ import Foundation
 import FluentProvider
 import Vapor
 
-public final class News: Model, Timestampable {
+public final class New: Model, Timestampable {
   // MARK: Properties
   public var title: String
   public var content: String
@@ -44,7 +44,7 @@ public final class News: Model, Timestampable {
 }
 
 //MARK: Preparation - Setting up Database
-extension News: Preparation {
+extension New: Preparation {
   public static func prepare(_ database: Database) throws {
     try database.create(self) { news in
       news.id()
@@ -59,7 +59,7 @@ extension News: Preparation {
 }
 
 //MARK: JSON
-extension News: JSONRepresentable {
+extension New: JSONRepresentable {
   public func makeJSON() throws -> JSON {
     var json = JSON()
     try json.set("id", id)

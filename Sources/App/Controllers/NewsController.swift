@@ -17,7 +17,7 @@ public final class NewsController {
   }
   
   public func all(_ req: Request) throws -> ResponseRepresentable {
-    return try News.makeQuery()
+    return try New.makeQuery()
       .all()
       .makeJSON()
   }

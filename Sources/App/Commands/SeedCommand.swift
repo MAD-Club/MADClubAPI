@@ -73,7 +73,7 @@ public final class SeedCommand: Command {
       let title: String = try new.get("title")
       let content: String = try new.get("content")
       // create the news outlet
-      let eventObject = News(title: title, content: content)
+      let eventObject = New(title: title, content: content)
       
       do {
         try eventObject.save()
@@ -101,6 +101,7 @@ public final class SeedCommand: Command {
     if environment == .development {
       // we need to start deleting some stuff in our event as well
       try Event.makeQuery().delete()
+      try New.makeQuery().delete()
       try User.makeQuery().delete()
       // then re-prepare duh
       try prepareEvents()
