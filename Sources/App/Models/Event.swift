@@ -2,48 +2,40 @@
 //  Event.swift
 //  App
 //
-//  Created by Johnny Nguyen on 2017-12-18.
+//  Created by Johnny Nguyen on 2018-01-18.
 //
 
 import Foundation
-import FluentProvider
 import Vapor
+import FluentProvider
 
 public final class Event: Model, Timestampable {
   // MARK: Properties
   public var title: String
-  public var content: String
-  public var eventTypeId: Identifier
-  
-//  public var type: String
+  public var description: String
+  public var startDate: Date
+  public var endDate: Date
   
   public let storage: Storage = Storage()
-
-  /**
-    Creates an Event object, with title and content properties as the 'News' cast.
- 
-    - parameters:
-      - eventTypeId: The Type of the event, in an id format
-      - title: The title of the event
-      - content: The content of the event
-  **/
-  public init(eventTypeId: Identifier, title: String, content: String) {
-    self.eventTypeId = eventTypeId
+  
+  public init(title: String, description: String, startDate: Date, endDate: Date) {
     self.title = title
-    self.content = content
+    self.description = description
+    self.startDate = startDate
+    self.endDate = endDate
   }
   
   public init(row: Row) throws {
-    eventTypeId = try row.get("eventTypeId")
     title = try row.get("title")
-    content = try row.get("content")
+    description = try row.get("description")
+    startDate = try row.get("startDate")
+    endDate = try row.get("endDate")
   }
   
   public func makeRow() throws -> Row {
     var row = Row()
-    try row.set("eventTypeId", eventTypeId)
     try row.set("title", title)
-    try row.set("content", content)
+    try row.set("description", description)
     return row
   }
 }
@@ -53,20 +45,14 @@ extension Event {
   public var galleries: Siblings<Event, Asset, Pivot<Event, Asset>> {
     return siblings()
   }
-  
-  public var eventType: Parent<Event, EventType> {
-    return parent(id: eventTypeId)
-  }
 }
 
-//MARK: Preparation - Setting up Database
 extension Event: Preparation {
   public static func prepare(_ database: Database) throws {
     try database.create(self) { event in
       event.id()
-      event.parent(EventType.self, foreignIdKey: "eventTypeId")
       event.string("title")
-      event.custom("content", type: "TEXT")
+      event.string("description")
     }
   }
   
@@ -75,18 +61,14 @@ extension Event: Preparation {
   }
 }
 
-//MARK: JSON
 extension Event: JSONRepresentable {
   public func makeJSON() throws -> JSON {
     var json = JSON()
     try json.set("id", id)
-    try json.set("type", eventType.get()?.type)
-    try json.set("galleries", galleries.all().makeJSON())
     try json.set("title", title)
-    try json.set("content", content)
-    // we can show the createdAt/UpdatedAt because of the Timestampable protocol
-    try json.set("updatedAt", updatedAt)
-    try json.set("createdAt", createdAt)
+    try json.set("description", description)
+    try json.set("startDate", startDate)
+    try json.set("endDate", endDate)
     return json
   }
 }

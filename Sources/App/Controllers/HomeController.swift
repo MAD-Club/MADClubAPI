@@ -21,8 +21,16 @@ public final class HomeController {
   
   public func index(_ req: Request) throws -> ResponseRepresentable {
     // we're gonna create a limit of 1 events and 1 news
-    let events = try Event.makeQuery().sort("createdAt", .ascending).filter("eventTypeId", EventType.Category.event.id()).limit(3).all()
-    let news = try Event.makeQuery().sort("createdAt", .ascending).filter("eventTypeId", EventType.Category.news.id()).limit(3).all()
-    return try view.make("index", ["events": events.makeJSON(), "news": news.makeJSON()])
+//    let events = try Event.makeQuery().sort("createdAt", .ascending).filter("eventTypeId", EventType.Category.event.id()).limit(3).all()
+    let news = try News.makeQuery().sort("createdAt", .ascending).limit(3).all()
+    return try view.make("index", ["news": news.makeJSON()])
+  }
+  
+  /**
+   Probably static information about the MAD Club.
+   THere's not much I can really put in here right
+  */
+  public func info(_ req: Request) throws -> ResponseRepresentable {
+    return try view.make("info")
   }
 }

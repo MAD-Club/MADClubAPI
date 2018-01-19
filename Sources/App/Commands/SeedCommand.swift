@@ -9,6 +9,7 @@ import Foundation
 import Vapor
 import Console
 import PostgreSQL
+import Random
 
 public final class SeedCommand: Command {
   public let id = "seed"
@@ -29,28 +30,6 @@ public final class SeedCommand: Command {
   }
   
   /**
-   Prepares the Event Types. This is initial data, so it's critical we have this.
-   We shouldn't really require a json for this so we'll add it like so
-  */
-  fileprivate func prepareEventType() throws {
-    console.print("Adding Event Types...")
-    if try EventType.count() > 0 {
-      let types: [String] = [EventType.Category.news.rawValue, EventType.Category.event.rawValue]
-      types.forEach { type in
-        let eventType = EventType(type: type)
-        do {
-          try eventType.save()
-          console.print("Saved successfully!")
-        } catch let e {
-          console.print(e.localizedDescription)
-        }
-      }
-    } else {
-      console.print("Skipping..")
-    }
-  }
-  
-  /**
     Prepares the Events Seeding
   **/
   fileprivate func prepareEvents() throws {
@@ -64,7 +43,12 @@ public final class SeedCommand: Command {
       let title: String = try event.get("title")
       let content: String = try event.get("content")
       // Create event, (1 is meetup, 2 is event)
-      let eventObject = try Event(eventTypeId: EventType.Category.event.id(), title: title, content: content)
+      let eventObject = Event(
+        title: title,
+        description: content,
+        startDate: Date(),
+        endDate: Date().addingTimeInterval(try Double(OSRandom.makeInt32()))
+      )
       
       do {
         try eventObject.save()
@@ -89,11 +73,11 @@ public final class SeedCommand: Command {
       let title: String = try new.get("title")
       let content: String = try new.get("content")
       // create the news outlet
-      let eventObject = try Event(eventTypeId: EventType.Category.news.id(), title: title, content: content)
+      let eventObject = News(title: title, content: content)
       
       do {
         try eventObject.save()
-        console.print("Added event: \(eventObject.title)-\(eventObject.id?.int ?? 0)")
+        console.print("Added news: \(eventObject.title)-\(eventObject.id?.int ?? 0)")
       } catch let error as PostgreSQLError {
         console.print("Could not save news: \(error.reason)")
       }
@@ -114,7 +98,6 @@ public final class SeedCommand: Command {
   
   public func run(arguments: [String]) throws {
     console.print("Running seed command...")
-    try prepareEventType()
     if environment == .development {
       // we need to start deleting some stuff in our event as well
       try Event.makeQuery().delete()
