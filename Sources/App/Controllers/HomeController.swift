@@ -23,7 +23,11 @@ public final class HomeController {
     // we're gonna create a limit of 1 events and 1 news
     let events = try Event.makeQuery().sort("createdAt", .ascending).limit(3).all()
     let news = try New.makeQuery().sort("createdAt", .ascending).limit(3).all()
-    return try view.make("index", ["news": news.makeJSON(), "events": events.makeJSON()])
+    
+    var results = try ["news": news.makeJSON(), "events": events.makeJSON()]
+    try req.user(array: &results)
+    
+    return try view.make("index", results)
   }
   
   /**

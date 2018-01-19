@@ -34,6 +34,7 @@ public final class WebCollection: RouteCollection {
       }
       user.get("login", handler: userController.loginView)
       user.post("login", handler: userController.loginWebPost)
+      user.get("logout", handler: userController.logout)
     }
     
     // MARK: Events Web View

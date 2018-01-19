@@ -32,6 +32,14 @@ public final class UserController {
   }
   
   /**
+    Logs the user out. This only works for web, since JWT tokens can be disposed through a localStorage
+  */
+  public func logout(_ req: Request) throws -> ResponseRepresentable {
+    try req.assertSession().destroy()
+    return Response(redirect: "/")
+  }
+  
+  /**
     Attempts to log the user in
   **/
   public func loginWebPost(_ req: Request) throws -> ResponseRepresentable {
@@ -39,12 +47,16 @@ public final class UserController {
       return try view.make("login", ["error": "Invalid credentials!"])
     }
     
+    guard !email.isEmpty || password.isEmpty else {
+      return try view.make("login", ["error": "Empty fields!"])
+    }
+    
     guard let user = try User.makeQuery().filter("email", email.lowercased()).first() else {
-      throw Abort.notFound
+      return try view.make("login", ["error": "This user doesn't exist!"])
     }
     
     guard try Hash.verify(message: password, matches: user.password) else {
-      throw Abort(.forbidden, reason: "Invalid user credentials!")
+      return try view.make("login", ["error": "Invalid credentials!"])
     }
     
     // start the session call based if html or mobile
