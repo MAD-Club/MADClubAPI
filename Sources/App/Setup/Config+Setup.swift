@@ -29,12 +29,12 @@ extension Config {
   /// Add all models that should have their
   /// schemas prepared before the app boots
   private func setupPreparations() throws {
-    preparations.append(UpdateEventTable.self)
-    // no migrations, just regular here
     preparations.append(EventType.self)
     preparations.append(Event.self)
     preparations.append(Asset.self)
     preparations.append(Pivot<Event, Asset>.self)
     preparations.append(User.self)
+    // add some migrations
+    preparations.append(UpdateEvent.self)
   }
 }

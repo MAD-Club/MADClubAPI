@@ -8,10 +8,13 @@
 import Vapor
 import FluentProvider
 
-public final class UpdateEventTable: Preparation {
+public struct UpdateEvent: Preparation {
   // the "up" function for those who are into rails/laravel for migrations
   public static func prepare(_ database: Database) throws {
-    
+    // modify the contents
+    try database.modify(Event.self) { event in
+      event.parent(EventType.self, foreignIdKey: "eventTypeId")
+    }
   }
   
   // the "down" function for those who are into rails/laravel when migrating

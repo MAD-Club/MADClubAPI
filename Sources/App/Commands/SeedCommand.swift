@@ -27,6 +27,24 @@ public final class SeedCommand: Command {
   }
   
   /**
+   Prepares the Event Types. This is initial data, so it's critical we have this.
+   We shouldn't really require a json for this so we'll add it like so
+  */
+  fileprivate func prepareEventType() throws {
+    console.print("Adding Event Types...")
+    let types: [String] = ["meetup", "event"]
+    types.forEach { type in
+      let eventType = EventType(type: type)
+      do {
+        try eventType.save()
+        console.print("Saved successfully!")
+      } catch let e {
+        console.print(e.localizedDescription)
+      }
+    }
+  }
+  
+  /**
     Prepares the Events Seeding
   **/
   fileprivate func prepareEvents() throws {
@@ -39,8 +57,8 @@ public final class SeedCommand: Command {
     try events.forEach { event in
       let title: String = try event.get("title")
       let content: String = try event.get("content")
-      // Create event
-      let eventObject = Event(title: title, content: content)
+      // Create event, (1 is meetup, 2 is event)
+      let eventObject = Event(eventTypeId: 2, title: title, content: content)
       
       do {
         try eventObject.save()
@@ -65,7 +83,12 @@ public final class SeedCommand: Command {
   
   public func run(arguments: [String]) throws {
     console.print("Running seed command...")
+    try prepareEventType()
     if environment == .development {
+      // we need to start deleting some stuff in our event as well
+      try Event.makeQuery().delete()
+      try User.makeQuery().delete()
+      // then re-prepare duh
       try prepareEvents()
       try prepareUser()
     }

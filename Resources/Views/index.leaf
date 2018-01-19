@@ -50,7 +50,7 @@
     </div>
     <div class="col-sm-6">
       <h2 class="center">Latest Events</h2>
-      #if(event) {
+      #loop(events, "event") {
         <h4 class="mt-2">#(event.title)</h4>
         <p>Created At: #dateformat(event.createdAt) | Last Updated: #dateformat(event.updatedAt)</p>
         <p class="justify">#(event.content)</p>
