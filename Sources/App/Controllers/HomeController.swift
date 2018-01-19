@@ -21,9 +21,9 @@ public final class HomeController {
   
   public func index(_ req: Request) throws -> ResponseRepresentable {
     // we're gonna create a limit of 1 events and 1 news
-//    let events = try Event.makeQuery().sort("createdAt", .ascending).filter("eventTypeId", EventType.Category.event.id()).limit(3).all()
+    let events = try Event.makeQuery().sort("createdAt", .ascending).limit(3).all()
     let news = try New.makeQuery().sort("createdAt", .ascending).limit(3).all()
-    return try view.make("index", ["news": news.makeJSON()])
+    return try view.make("index", ["news": news.makeJSON(), "events": events.makeJSON()])
   }
   
   /**

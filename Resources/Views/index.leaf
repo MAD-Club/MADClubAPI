@@ -58,8 +58,8 @@
       <h2 class="center">Latest Events</h2>
       #loop(events, "event") {
         <h4 class="mt-2">#(event.title)</h4>
-        <p>Created At: #dateformat(event.createdAt) | Last Updated: #dateformat(event.updatedAt)</p>
-        <p class="justify">#(event.content)</p>
+        <p>Start Date: #dateformat(event.startDate) | End Date: #dateformat(event.endDate)</p>
+        <p class="justify">#(event.description)</p>
       }
       <a href="/events">Click here to read more</a>      
     </div>

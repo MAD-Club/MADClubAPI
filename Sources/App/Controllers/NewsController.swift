@@ -23,7 +23,7 @@ public final class NewsController {
   }
   
   public func index(_ req: Request) throws -> ResponseRepresentable {
-    let news = try Event.makeQuery().all()
+    let news = try New.makeQuery().all()
     var results = ["news": try news.makeJSON()]
     try req.user(array: &results)
     

@@ -36,6 +36,8 @@ public final class Event: Model, Timestampable {
     var row = Row()
     try row.set("title", title)
     try row.set("description", description)
+    try row.set("startDate", startDate)
+    try row.set("endDate", endDate)
     return row
   }
 }
@@ -53,6 +55,8 @@ extension Event: Preparation {
       event.id()
       event.string("title")
       event.string("description")
+      event.date("startDate")
+      event.date("endDate")
     }
   }
   

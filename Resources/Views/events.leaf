@@ -16,8 +16,8 @@
         <!-- <img src="#galleryUrl(event.galleries, 0)" alt="Header pictures" /> -->
       }
       <h1 class="col-sm-12">#(event.title)</h1>
-      <p class="col-sm-12">Created At: #dateformat(event.createdAt) | Last Updated: #dateformat(event.updatedAt)</p>
-      <p class="col-sm-12">#(event.content)</p>
+      <p class="col-sm-12">Start Date: #dateformat(event.startDate) | End Date: #dateformat(event.endDate)</p>
+      <p class="col-sm-12">#(event.description)</p>
     </div>
   }
 }
