@@ -17,12 +17,14 @@ public final class SeedCommand: Command {
   
   private let environment: Environment
   private let events: [Config]?
+  private let news: [Config]?
   private let user: [String: Config]?
   
   public init(console: ConsoleProtocol, config: Config) {
     self.console = console
     self.environment = config.environment
     events = config["seed", "events"]?.array
+    news = config["seed", "news"]?.array
     user = config["seed", "user"]?.object
   }
   
@@ -32,15 +34,19 @@ public final class SeedCommand: Command {
   */
   fileprivate func prepareEventType() throws {
     console.print("Adding Event Types...")
-    let types: [String] = ["meetup", "event"]
-    types.forEach { type in
-      let eventType = EventType(type: type)
-      do {
-        try eventType.save()
-        console.print("Saved successfully!")
-      } catch let e {
-        console.print(e.localizedDescription)
+    if try EventType.count() > 0 {
+      let types: [String] = [EventType.Category.news.rawValue, EventType.Category.event.rawValue]
+      types.forEach { type in
+        let eventType = EventType(type: type)
+        do {
+          try eventType.save()
+          console.print("Saved successfully!")
+        } catch let e {
+          console.print(e.localizedDescription)
+        }
       }
+    } else {
+      console.print("Skipping..")
     }
   }
   
@@ -58,13 +64,38 @@ public final class SeedCommand: Command {
       let title: String = try event.get("title")
       let content: String = try event.get("content")
       // Create event, (1 is meetup, 2 is event)
-      let eventObject = Event(eventTypeId: 2, title: title, content: content)
+      let eventObject = try Event(eventTypeId: EventType.Category.event.id(), title: title, content: content)
       
       do {
         try eventObject.save()
         console.print("Added event: \(eventObject.title)-\(eventObject.id?.int ?? 0)")
       } catch let error as PostgreSQLError {
         console.print("Could not save event: \(error.reason)")
+      }
+    }
+  }
+  
+  /**
+   Prepares the News category seeding
+  **/
+  fileprivate func prepareNews() throws {
+    console.print("Adding News...")
+    guard let news = news else {
+      console.print("Could not retrieve news!")
+      return
+    }
+    
+    try news.forEach { new in
+      let title: String = try new.get("title")
+      let content: String = try new.get("content")
+      // create the news outlet
+      let eventObject = try Event(eventTypeId: EventType.Category.news.id(), title: title, content: content)
+      
+      do {
+        try eventObject.save()
+        console.print("Added event: \(eventObject.title)-\(eventObject.id?.int ?? 0)")
+      } catch let error as PostgreSQLError {
+        console.print("Could not save news: \(error.reason)")
       }
     }
   }
@@ -90,6 +121,7 @@ public final class SeedCommand: Command {
       try User.makeQuery().delete()
       // then re-prepare duh
       try prepareEvents()
+      try prepareNews()
       try prepareUser()
     }
   }

@@ -37,6 +37,13 @@ extension EventType {
   // we'll generate an enum for us to use to differentiate which type of "event" it is
   public enum Category: String {
     case event, news
+    
+    public func id() throws -> Identifier {
+      guard let eventType = try EventType.makeQuery().filter("type", rawValue).first() else {
+        throw Abort.notFound
+      }
+      return try eventType.assertExists()
+    }
   }
 }
 
