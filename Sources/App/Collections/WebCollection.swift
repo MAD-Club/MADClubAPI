@@ -42,6 +42,12 @@ public final class WebCollection: RouteCollection {
     let events = builder.grouped("events")
     events.get("/", handler: eventController.index)
     
+    // MARK: News
+    let newsController = NewsController(view)
+    
+    let news = builder.grouped("news")
+    news.get("/", handler: newsController.index)
+    
     // MARK: - HomeController
     let homeController = HomeController(view)
     builder.get("/", handler: homeController.index)

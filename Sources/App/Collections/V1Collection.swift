@@ -29,13 +29,24 @@ public final class V1Collection: RouteCollection {
       user.get(":userId", handler: userController.show)
     }
   
-    // MARK: - Assets Controller
+    // MARK: Assets Controller
     let assetsController = AssetController()
     api.grouped(AuthenticateMiddleware()).resource("assets", assetsController)
     
-    // MARK: - EventController
+    // MARK: EventController
     let eventController = EventController(view)
     
+    api.group("events") { events in
+      events.get("/", handler: eventController.all)
+    }
+    
+    // MARK: NewsController
+    let newsController = NewsController(view)
+    
+    api.group("news") { news in
+      news.get("/", handler: newsController.all)
+    }
+  
     // MARK: Events API
     api.group("events") { event in
       event.get("/", handler: eventController.all)
