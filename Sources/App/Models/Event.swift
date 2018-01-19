@@ -10,9 +10,10 @@ import FluentProvider
 import Vapor
 
 public final class Event: Model, Timestampable {
-  //MARK: Properties
+  // MARK: Properties
   public var title: String
   public var content: String
+//  public var type: String
   
   public let storage: Storage = Storage()
 

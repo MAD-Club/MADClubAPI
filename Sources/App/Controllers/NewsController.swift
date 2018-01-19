@@ -16,7 +16,7 @@ public final class NewsController {
     self.view = view
   }
   
-  public func index(_ req: Request) throws -> ResponseRepresentable {
-    return try 
-  }
+//  public func index(_ req: Request) throws -> ResponseRepresentable {
+//    return try
+//  }
 }
