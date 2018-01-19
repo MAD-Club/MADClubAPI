@@ -21,14 +21,17 @@ public final class EventController {
     An API Call for JSON
   **/
   public func all(_ req: Request) throws -> ResponseRepresentable {
-    return try Event.all().makeJSON()
+    return try Event.makeQuery()
+      .filter("eventTypeId", EventType.Category.event.id())
+      .all()
+      .makeJSON()
   }
   
   /**
    Returns the page on the web
   **/
   public func index(_ req: Request) throws -> ResponseRepresentable {
-    let events = try Event.all()
+    let events = try Event.makeQuery().filter("eventTypeId", EventType.Category.event.id()).all()
     
     // we're checking for a session in this case
     var results = ["events": try events.makeJSON()]

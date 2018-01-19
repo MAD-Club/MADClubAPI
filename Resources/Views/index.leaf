@@ -46,7 +46,13 @@
 #export("content") {
   <div class="row mt-2">
     <div class="col-sm-6">
-      <h2 class="center">Latest News</h2>
+      <h2 class="center mb-2">Latest News</h2>
+      #loop(news, "new") {
+        <h4 class="mt-2">#(new.title)</h4>
+        <p>Created At: #dateformat(new.createdAt) | Last Updated: #dateformat(new.updatedAt)</p>
+        <p class="justify">#(new.content)</p>
+      }
+      <a href="/news">Click here to read more</a> 
     </div>
     <div class="col-sm-6">
       <h2 class="center">Latest Events</h2>

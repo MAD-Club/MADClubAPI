@@ -16,7 +16,18 @@ public final class NewsController {
     self.view = view
   }
   
-//  public func index(_ req: Request) throws -> ResponseRepresentable {
-//    return try
-//  }
+  public func all(_ req: Request) throws -> ResponseRepresentable {
+    return try Event.makeQuery()
+      .filter("eventTypeId", EventType.Category.news.id())
+      .all()
+      .makeJSON()
+  }
+  
+  public func index(_ req: Request) throws -> ResponseRepresentable {
+    let news = try Event.makeQuery().filter("eventTypeId", EventType.Category.news.id()).all()
+    var results = ["news": try news.makeJSON()]
+    try req.user(array: &results)
+    
+    return try view.make("news", results)
+  }
 }
