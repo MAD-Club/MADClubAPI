@@ -19,14 +19,14 @@ public final class SeedCommand: Command {
   private let environment: Environment
   private let events: [Config]?
   private let news: [Config]?
-  private let user: [String: Config]?
+  private let users: [Config]?
   
   public init(console: ConsoleProtocol, config: Config) {
     self.console = console
     self.environment = config.environment
     events = config["seed", "events"]?.array
     news = config["seed", "news"]?.array
-    user = config["seed", "user"]?.object
+    users = config["seed", "users"]?.array
   }
   
   /**
@@ -87,13 +87,18 @@ public final class SeedCommand: Command {
   /**
     Prepares the users seeding based on the environments given
    **/
-  fileprivate func prepareUser() throws {
+  fileprivate func prepareUsers() throws {
     console.print("adding test user")
-    if let user = user, let email = user["email"]?.string, let password = user["password"]?.string {
-      let userObject = try? User(email: email, password: password)
-      userObject?.admin = true
-      try? userObject?.save()
-      console.print("user saved!")
+    if let users = users {
+      try users.forEach { user in
+        let userObject = try User(
+          email: user.get("email"),
+          password: user.get("password")
+        )
+        userObject.admin = try user.get("admin")
+        try userObject.save()
+        console.print("user saved!")
+      }
     }
   }
   
@@ -107,7 +112,7 @@ public final class SeedCommand: Command {
       // then re-prepare duh
       try prepareEvents()
       try prepareNews()
-      try prepareUser()
+      try prepareUsers()
     }
   }
 }
