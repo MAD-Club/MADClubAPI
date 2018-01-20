@@ -37,15 +37,15 @@ public final class NewsController {
    Creates a new page, POST request, for web-pages
   */
   public func storeNews(_ req: Request) throws -> ResponseRepresentable {
-    guard let title = req.formData?["title"]?.string,
-      let content = req.formData?["content"]?.string else {
+    guard let title = req.formURLEncoded?["title"]?.string,
+      let content = req.formURLEncoded?["content"]?.string else {
         return try view.make("news/index", ["error": "Invalid fields!"])
     }
     
     let news = New(title: title, content: content)
     try news.save()
     
-    return Response(redirect: "news")
+    return Response(redirect: "/news")
   }
   
   /**
@@ -53,5 +53,16 @@ public final class NewsController {
   */
   public func storeNewsView(_ req: Request) throws -> ResponseRepresentable {
     return try view.make("news/create")
+  }
+  
+  /**
+    Sometimes, we want to delete a request as well
+  **/
+  public func deleteNews(_ req: Request) throws -> ResponseRepresentable {
+    if let newsId = req.query?["id"]?.int, let news = try New.find(newsId) {
+      try news.delete()
+    }
+    
+    return Response(redirect: "/news")
   }
 }

@@ -50,6 +50,7 @@ public final class WebCollection: RouteCollection {
     news.get("/", handler: newsController.index)
     news.post("/", handler: newsController.storeNews)
     news.get("create", handler: newsController.storeNewsView)
+    news.delete("/", handler: newsController.deleteNews)
     
     // MARK: - HomeController
     let homeController = HomeController(view)
