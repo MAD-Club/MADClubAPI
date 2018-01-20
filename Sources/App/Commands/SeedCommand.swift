@@ -91,6 +91,7 @@ public final class SeedCommand: Command {
     console.print("adding test user")
     if let user = user, let email = user["email"]?.string, let password = user["password"]?.string {
       let userObject = try? User(email: email, password: password)
+      userObject?.admin = true
       try? userObject?.save()
       console.print("user saved!")
     }

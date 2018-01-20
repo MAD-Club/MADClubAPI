@@ -48,9 +48,11 @@ public final class WebCollection: RouteCollection {
     
     let news = builder.grouped("news")
     news.get("/", handler: newsController.index)
-    news.post("/", handler: newsController.storeNews)
-    news.get("create", handler: newsController.storeNewsView)
-    news.delete("/", handler: newsController.deleteNews)
+    news.get("/", ":id", handler: newsController.show)
+    news.grouped(AuthenticateMiddleware(), AdminMiddleware()).post("/", handler: newsController.storeNews)
+    news.grouped(AuthenticateMiddleware(), AdminMiddleware()).get("create", handler: newsController.storeNewsView)
+    news.grouped(AuthenticateMiddleware(), AdminMiddleware()).get(":id", "edit", handler: newsController.editNewsView)
+    news.grouped(AuthenticateMiddleware(), AdminMiddleware()).post(":id", "edit", handler: newsController.editNews)
     
     // MARK: - HomeController
     let homeController = HomeController(view)
