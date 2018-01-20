@@ -3,6 +3,14 @@
 #export("title") { St. Clair MAD Club News }
 
 #export("content") {
+  <!-- Check the users here to create a new page -->
+  #if(user) {
+    #if(user.admin) {
+      <div class="row col-sm-12 mt-2">
+        <a class="btn btn-primary" href="/news/create">Create News</a>
+      </div>
+    }
+  }
   <!-- Going through events here -->
   #loop(news, "new") {
     <div class="row mt-2">
