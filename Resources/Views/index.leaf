@@ -48,11 +48,10 @@
     <div class="col-sm-6">
       <h2 class="center mb-2">Latest News</h2>
       #loop(news, "new") {
-        <h4 class="mt-2">#(new.title)</h4>
+        <a href="/news/#(new.id)"><h4 class="mt-2">#(new.title)</h4></a>
         <p>Created At: #dateformat(new.createdAt) | Last Updated: #dateformat(new.updatedAt)</p>
-        <p class="justify">#(new.content)</p>
       }
-      <a href="/news">Click here to read more</a> 
+      <a href="/news">Click here to see all</a>
     </div>
     <div class="col-sm-6">
       <h2 class="center">Latest Events</h2>
@@ -61,7 +60,7 @@
         <p>Start Date: #dateformat(event.startDate) | End Date: #dateformat(event.endDate)</p>
         <p class="justify">#(event.description)</p>
       }
-      <a href="/events">Click here to read more</a>      
+      <a href="/events">Click here to see all</a>      
     </div>
   </div>
 }
