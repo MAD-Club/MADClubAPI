@@ -13,7 +13,7 @@ extension Request {
   /**
     Session-helper function, checks for sessions for us
    **/
-  public func user( array: inout [String: JSON]) throws {
+  public func user(array: inout [String: JSON]) throws {
     let session = try assertSession()
     // check if user exists and if it does, we're adding them in
     if let userId = session.data["userId"]?.int {

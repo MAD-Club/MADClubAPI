@@ -43,7 +43,7 @@ public final class UserController {
     Attempts to log the user in
   **/
   public func loginWebPost(_ req: Request) throws -> ResponseRepresentable {
-    guard let email = req.formURLEncoded?["email"]?.string, let password = req.formURLEncoded?["password"]?.string else {
+    guard let email = req.formData?["email"]?.string, let password = req.formData?["password"]?.string else {
       return try view.make("login", ["error": "Invalid credentials!"])
     }
     

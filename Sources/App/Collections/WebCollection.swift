@@ -48,6 +48,8 @@ public final class WebCollection: RouteCollection {
     
     let news = builder.grouped("news")
     news.get("/", handler: newsController.index)
+    news.post("/", handler: newsController.storeNews)
+    news.get("create", handler: newsController.storeNewsView)
     
     // MARK: - HomeController
     let homeController = HomeController(view)
