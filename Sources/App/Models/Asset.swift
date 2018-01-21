@@ -23,13 +23,14 @@ public final class Asset: Model, Timestampable {
   /**
     Creates an asset model, that's referenced from a file storage or our own API
    
-   - parameters:
-     - fileName: the filename
-     - url: String - the url path for the file
-     - type: String - The file type
-     - size: Int64 - The file size
-     - fileId: String - The fileId from Kloudless API
-  **/
+   - Parameter fileName: the filename
+   - Parameter url: The urlpath for the file
+   - Parameter fileName: the filename
+   - Parameter url: String - the url path for the file
+   - Parameter type: String - The file type
+   - Parameter size: Int64 - The file size
+   - Parameter fileId: String - The fileId from Kloudless API
+  */
   public init(fileName: String, url: String, type: String, size: Int64, fileId: String) {
     self.fileName = fileName
     self.url = url

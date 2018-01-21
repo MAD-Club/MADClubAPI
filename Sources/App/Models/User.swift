@@ -14,7 +14,6 @@ public final class User: Model, Timestampable {
   public var email: String
   public var password: String
   public var admin: Bool = false
-  public var subscribed: Bool = false
   
 	public var storage: Storage = Storage()
 	
@@ -25,20 +24,17 @@ public final class User: Model, Timestampable {
      - email: The email used for login
      - password: Password to login
      - admin: boolean value to check for specific access
-     - subscribed: subscription service to newsletters or upcoming news
   **/
-  public init(email: String, password: String, admin: Bool = false, subscribed: Bool = false) throws {
+  public init(email: String, password: String, admin: Bool = false) throws {
     self.email = email
     self.password = try Hash.make(message: password).makeString()
     self.admin = admin
-    self.subscribed = subscribed
   }
   
 	public init(row: Row) throws {
     email = try row.get("email")
     password = try row.get("password")
     admin = try row.get("admin")
-    subscribed = try row.get("subscribed")
 	}
 	
 	public func makeRow() throws -> Row {
@@ -46,7 +42,6 @@ public final class User: Model, Timestampable {
     try row.set("email", email)
     try row.set("password", password)
     try row.set("admin", admin)
-    try row.set("subscribed", subscribed)
 		return row
 	}
 }
@@ -59,7 +54,6 @@ extension User: Preparation {
       user.string("email")
       user.string("password")
       user.bool("admin", default: false)
-      user.bool("subscribed", default: false)
     }
   }
   
@@ -75,7 +69,6 @@ extension User: JSONRepresentable {
     try json.set("id", id)
     try json.set("email", email)
     try json.set("admin", admin)
-    try json.set("subscribed", subscribed)
     try json.set("createdAt", createdAt)
     try json.set("updatedAt", updatedAt)
     return json

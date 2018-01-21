@@ -1,0 +1,23 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club News }
+
+#export("content") {
+  <!-- Going through events here -->
+  <div class="row col-sm-12 mt-2">
+    <h1 class="col-sm-12">#(news.title)</h1>
+    <p class="col-sm-12">Created At: #dateformat(news.createdAt) | Last Updated: #dateformat(news.updatedAt)</p>
+    #if(user) {
+      #if(user.admin) {
+        <div class="col-sm-12 mb-2">
+          <a class="btn btn-success btn-sm" href="/news/#(news.id)/edit">Edit</a>
+          <a class="btn btn-danger btn-sm" href="/news?id=#(news.id)">Delete</a>
+        </div>
+      }
+    }
+    <div class="col-sm-12">
+      #markdown(news.content)
+    </div>
+  </div>
+}
+

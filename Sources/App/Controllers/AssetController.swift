@@ -10,7 +10,6 @@ import Vapor
 import HTTP
 
 public final class AssetController: ResourceRepresentable {
-  
   /**
     Retrieves all the assets found
   **/
@@ -54,14 +53,7 @@ public final class AssetController: ResourceRepresentable {
     Showcases an asset, based on the file storage API
   **/
   public func show(_ req: Request, asset: Asset) throws -> ResponseRepresentable {
-    return JSON()
-  }
-  
-  /**
-   updates an asset based on file storage API
-  **/
-  public func update(_ req: Request, asset: Asset) throws -> ResponseRepresentable {
-    return JSON()
+    return try asset.makeJSON()
   }
   
   /**
@@ -76,7 +68,6 @@ public final class AssetController: ResourceRepresentable {
       index: index,
       store: store,
       show: show,
-      update: update,
       destroy: destroy
     )
   }

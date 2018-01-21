@@ -21,42 +21,37 @@ public final class V1Collection: RouteCollection {
     // MARK: - User Controller
     let userController = UserController(view)
     
-    // web
-    builder.group("users") { user in
-      user.group(AuthenticateMiddleware(), AdminMiddleware()) { auth in
-        auth.get("/", handler: userController.index)
-        auth.post("/", handler: userController.store)
-        auth.patch(":userId", handler: userController.update)
-        auth.delete(":userId", handler: userController.destroy)
-      }
-      user.get("login", handler: userController.loginView)
-      user.post("login", handler: userController.loginWebPost)
-    }
     api.post("auth", "login", handler: userController.loginAPIPost)
-    
+
     // api
     api.grouped(AuthenticateMiddleware(), AdminMiddleware()).group("users") { user in
       user.get("/", handler: userController.index)
       user.get(":userId", handler: userController.show)
     }
   
-    // MARK: - Assets Controller
+    // MARK: Assets Controller
     let assetsController = AssetController()
     api.grouped(AuthenticateMiddleware()).resource("assets", assetsController)
     
-    // MARK: - EventController
+    // MARK: EventController
     let eventController = EventController(view)
     
-    // MARK: Events API
-    let eventsAPI = api.grouped("events")
-    eventsAPI.get("/", handler: eventController.all)
+    api.group("events") { events in
+      events.get("/", handler: eventController.all)
+    }
     
-    // MARK: Events Web View
-    let events = builder.grouped("events")
-    events.get("/", handler: eventController.index)
+    // MARK: NewsController
+    let newsController = NewsController(view)
+    
+    api.group("news") { news in
+      news.get("/", handler: newsController.all)
+      news.get("/", ":id", handler: newsController.getNews)
+    }
   
-    // MARK: - HomeController
-    let homeController = HomeController(view)
-    builder.get("/", handler: homeController.index)
+    // MARK: Events API
+    api.group("events") { event in
+      event.get("/", handler: eventController.all)
+      event.get("/", ":id", handler: newsController.getNews)
+    }
   }
 }

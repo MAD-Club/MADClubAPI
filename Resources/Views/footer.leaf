@@ -2,6 +2,10 @@
   <div class="container">
     <a href="#">FAQ</a>
     <a href="#">Contact Us</a>
-    <a href="/users/login">Login</a>
+    #if(user) {
+      <a href="/users/logout">Logout</a>
+    } ##else() {
+      <a href="/users/login">Login</a>
+    }
   </div>
 </footer>

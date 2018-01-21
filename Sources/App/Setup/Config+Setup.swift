@@ -2,6 +2,7 @@ import FluentProvider
 import PostgreSQLProvider
 import LeafProvider
 import SendGridProvider
+import MarkdownProvider
 
 extension Config {
   public func setup() throws {
@@ -20,6 +21,7 @@ extension Config {
     try addProvider(PostgreSQLProvider.Provider.self)
     try addProvider(LeafProvider.Provider.self)
     try addProvider(SendGridProvider.Provider.self)
+    try addProvider(MarkdownProvider.Provider.self)
   }
   
   private func addConfigurables() {
@@ -29,10 +31,11 @@ extension Config {
   /// Add all models that should have their
   /// schemas prepared before the app boots
   private func setupPreparations() throws {
-    preparations.append(UpdateDatabase.self)
+    preparations.append(New.self)
     preparations.append(Event.self)
     preparations.append(Asset.self)
     preparations.append(Pivot<Event, Asset>.self)
     preparations.append(User.self)
+    // add some migrations here right after
   }
 }

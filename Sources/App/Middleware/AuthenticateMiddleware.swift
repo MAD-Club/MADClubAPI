@@ -19,11 +19,11 @@ public final class AuthenticateMiddleware: Middleware {
       // here we'll need to check for sessions
       let session = try request.assertSession()
       guard let userId = session.data["userId"]?.int else {
-        throw Abort(.forbidden, reason: "Could not find the user! Please login")
+        return Response(redirect: "/")
       }
       
       guard try User.find(userId) != nil else {
-        throw Abort(.notFound, reason: "This user does not exist!")
+        return Response(redirect: "/")
       }
       
     } else {

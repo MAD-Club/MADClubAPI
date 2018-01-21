@@ -40,7 +40,8 @@
     "//": "prepare: Supplied by the Fluent provider. Prepares the database (configure in fluent.json)",
     "commands": [
         "prepare",
-        "seed"
+        "seed",
+        "drop"
     ],
 	
 		"view": "leaf",
