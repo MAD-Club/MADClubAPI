@@ -17,11 +17,15 @@ public final class NewsController {
     self.view = view
   }
   
+  // MARK: API Calls
+  
   public func all(_ req: Request) throws -> ResponseRepresentable {
     return try New.makeQuery()
       .all()
       .makeJSON()
   }
+  
+  // MARK: Web Calls
   
   /**
    Showcases the index page of a request

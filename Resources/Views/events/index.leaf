@@ -7,7 +7,7 @@
   #if(user) {
     #if(user.admin) {
       <div class="row col-sm-12 mt-2">
-        <a class="btn btn-primary" href="/news/create">Create News</a>
+        <a class="btn btn-primary" href="/events/create">Create News</a>
       </div>
     }
   }

@@ -42,6 +42,9 @@ public final class WebCollection: RouteCollection {
     
     let events = builder.grouped("events")
     events.get("/", handler: eventController.index)
+    events.get("/", ":id", handler: eventController.show)
+    events.grouped(AuthenticateMiddleware(), AdminMiddleware()).post("/", handler: eventController.createEvent)
+    events.grouped(AuthenticateMiddleware(), AdminMiddleware()).get("create", handler: eventController.createEventView)
     
     // MARK: News
     let newsController = NewsController(view)

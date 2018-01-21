@@ -10,7 +10,6 @@ import Vapor
 import HTTP
 
 public final class AssetController: ResourceRepresentable {
-  
   /**
     Retrieves all the assets found
   **/
