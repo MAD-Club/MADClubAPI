@@ -8,7 +8,6 @@
 import Foundation
 import Vapor
 import HTTP
-import SwiftMarkdown
 
 public final class NewsController {
   private let view: ViewRenderer
@@ -72,7 +71,6 @@ public final class NewsController {
       return Response(redirect: "/news")
     }
     
-    news.content = try markdownToHTML(news.content)
     var results = ["news": try news.makeJSON()]
     try req.user(array: &results)
     

@@ -16,7 +16,7 @@
       }
     }
     <div class="col-sm-12">
-      #raw(news.content)
+      #markdown(news.content)
     </div>
   </div>
 }

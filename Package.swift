@@ -15,10 +15,10 @@ let package = Package(
 		.package(url: "https://github.com/vapor/leaf-provider.git", .upToNextMajor(from: "1.1.0")),
     .package(url: "https://github.com/vapor-community/sendgrid-provider.git", .upToNextMajor(from: "2.2.1")),
     .package(url: "https://github.com/vapor/jwt-provider.git", .upToNextMajor(from: "1.3.0")),
-    .package(url: "https://github.com/vapor-community/markdown.git", .upToNextMajor(from: "0.4.0"))
+    .package(url: "https://github.com/vapor-community/markdown-provider.git", .upToNextMajor(from: "1.1.0"))
 	],
 	targets: [
-		.target(name: "App", dependencies: ["Vapor", "FluentProvider", "PostgreSQLProvider", "LeafProvider", "SendGridProvider", "JWTProvider", "SwiftMarkdown"],
+		.target(name: "App", dependencies: ["Vapor", "FluentProvider", "PostgreSQLProvider", "LeafProvider", "SendGridProvider", "JWTProvider", "MarkdownProvider"],
 						exclude: [
 							"Config",
 							"Public",

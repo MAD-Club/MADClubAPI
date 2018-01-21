@@ -2,6 +2,7 @@ import FluentProvider
 import PostgreSQLProvider
 import LeafProvider
 import SendGridProvider
+import MarkdownProvider
 
 extension Config {
   public func setup() throws {
@@ -20,6 +21,7 @@ extension Config {
     try addProvider(PostgreSQLProvider.Provider.self)
     try addProvider(LeafProvider.Provider.self)
     try addProvider(SendGridProvider.Provider.self)
+    try addProvider(MarkdownProvider.Provider.self)
   }
   
   private func addConfigurables() {
