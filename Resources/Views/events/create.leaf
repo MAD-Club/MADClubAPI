@@ -3,7 +3,7 @@
 #export("title") { St. Clair MAD Club Create News }
 
 #export("content") {
-  <div id="news" class="row mt-2">
+  <div id="events" class="row mt-2">
     #if(error) {
       <div class="col-sm-12 ml-1 alert alert-danger" role="alert">
         #(error)
@@ -12,9 +12,9 @@
     <div class="col-sm-12 mt-2">
       <form method="POST" action="/events">
         <div class="form-group">
-        <label for="title">Title</label>
-          <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title" required>
-        </div>
+          <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title" required>
+          </div>
         <div class="form-group">
           <label for="description">Description</label>
           <input type="text" class="form-control" id="description" name="description" placeholder="Enter a desciription of your event" required/>

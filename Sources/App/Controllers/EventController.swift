@@ -73,7 +73,7 @@ public final class EventController {
     Returns the event view
   */
   public func createEventView(_ req: Request) throws -> ResponseRepresentable {
-    return try view.make("events/create")
+    return try view.make("events/create", req.getUser())
   }
   
   /**
@@ -83,20 +83,20 @@ public final class EventController {
     guard
       let title = req.formURLEncoded?["title"]?.string,
       let description = req.formURLEncoded?["description"]?.string,
-      let startDate = req.formURLEncoded?["startDate"]?.date,
-      let endDate = req.formURLEncoded?["endDate"]?.date else {
+      let startDate = req.formURLEncoded?["startDate"]?.customDate,
+      let endDate = req.formURLEncoded?["endDate"]?.customDate else {
         return try view.make("events/create", ["error": "Unfilled Information!"])
     }
-    
+
     // checks and makes sure the dates are properly set
     guard startDate < endDate else {
       return try view.make("events/create", ["error": "Your initial date can't be greater than your end date!"])
     }
-    
+
     let event = Event(title: title, description: description, startDate: startDate, endDate: endDate)
     try event.save()
     
     // assuming everything is fine, it'll revert to here
-    return try view.make("events/index", req.getUser())
+    return Response(redirect: "/events")
   }
 }

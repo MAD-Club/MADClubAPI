@@ -83,7 +83,7 @@ public final class NewsController {
   public func storeNews(_ req: Request) throws -> ResponseRepresentable {
     guard let title = req.formURLEncoded?["title"]?.string,
       let content = req.formURLEncoded?["content"]?.string else {
-        return try view.make("news/index", ["error": "Invalid fields!"])
+        return try view.make("news/create", ["error": "Invalid fields!"])
     }
     
     let news = New(title: title, content: content)

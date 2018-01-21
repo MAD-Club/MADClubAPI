@@ -60,5 +60,6 @@ public final class WebCollection: RouteCollection {
     // MARK: - HomeController
     let homeController = HomeController(view)
     builder.get("/", handler: homeController.index)
+    builder.get("about", handler: homeController.about)
   }
 }

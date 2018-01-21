@@ -34,7 +34,7 @@ public final class HomeController {
    Probably static information about the MAD Club.
    THere's not much I can really put in here right
   */
-  public func info(_ req: Request) throws -> ResponseRepresentable {
-    return try view.make("info")
+  public func about(_ req: Request) throws -> ResponseRepresentable {
+    return try view.make("about")
   }
 }
