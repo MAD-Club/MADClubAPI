@@ -26,6 +26,7 @@ extension Config {
   
   private func addConfigurables() {
     addConfigurable(command: SeedCommand.init, name: "seed")
+    addConfigurable(command: DropCommand.init, name: "drop")
   }
   
   /// Add all models that should have their
