@@ -36,20 +36,20 @@ public final class V1Collection: RouteCollection {
     // MARK: EventController
     let eventController = EventController(view)
     
-    api.group("events") { events in
+    api.grouped(APIMiddleware()).group("events") { events in
       events.get("/", handler: eventController.all)
     }
     
     // MARK: NewsController
     let newsController = NewsController(view)
     
-    api.group("news") { news in
+    api.grouped(APIMiddleware()).group("news") { news in
       news.get("/", handler: newsController.all)
       news.get("/", ":id", handler: newsController.getNews)
     }
   
     // MARK: Events API
-    api.group("events") { event in
+    api.grouped(APIMiddleware()).group("events") { event in
       event.get("/", handler: eventController.all)
       event.get("/", ":id", handler: newsController.getNews)
     }
