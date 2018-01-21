@@ -5,7 +5,11 @@
 #export("content") {
   <!-- Check for user -->
   #if(user) {
-    <p>Yo.</p>
+    #if(user.admin) {
+      <div class="row col-sm-12 mt-2">
+        <a class="btn btn-primary" href="/news/create">Create News</a>
+      </div>
+    }
   }
   <!-- Going through events here -->
   #loop(events, "event") {
