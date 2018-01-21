@@ -14,8 +14,8 @@ import Console
  WARNING: THIS WILL DELETE EVERYTHING SO RUN IF SURE.
 */
 public final class DropCommand: Command {
-  public let id = "seed"
-  public let help = ["Prepares initial data for seeding."]
+  public let id = "drop"
+  public let help = ["Drops the whole table."]
   public let console: ConsoleProtocol
   
   public init(console: ConsoleProtocol) {
