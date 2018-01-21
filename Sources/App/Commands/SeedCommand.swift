@@ -11,6 +11,9 @@ import Console
 import PostgreSQL
 import Random
 
+/**
+ Seed command to initially seed our database to whatever we want
+*/
 public final class SeedCommand: Command {
   public let id = "seed"
   public let help = ["Prepares initial data for seeding."]
