@@ -45,11 +45,13 @@ public final class V1Collection: RouteCollection {
     
     api.group("news") { news in
       news.get("/", handler: newsController.all)
+      news.get("/", ":id", handler: newsController.getNews)
     }
   
     // MARK: Events API
     api.group("events") { event in
       event.get("/", handler: eventController.all)
+      event.get("/", ":id", handler: newsController.getNews)
     }
   }
 }

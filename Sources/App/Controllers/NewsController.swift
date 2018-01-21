@@ -19,10 +19,28 @@ public final class NewsController {
   
   // MARK: API Calls
   
+  /**
+   Gets all events returned from query
+   */
   public func all(_ req: Request) throws -> ResponseRepresentable {
     return try New.makeQuery()
       .all()
       .makeJSON()
+  }
+  
+  /**
+    Returns the event json based on the id
+  */
+  public func getNews(_ req: Request) throws -> ResponseRepresentable {
+    guard let id = req.parameters["id"]?.int else {
+      throw Abort.badRequest
+    }
+    
+    guard let news = try New.find(id) else {
+      throw Abort.notFound
+    }
+    
+    return try news.makeJSON()
   }
   
   // MARK: Web Calls
