@@ -3,7 +3,7 @@
 
 ### Vapor ###
 Config/secrets
-# Config/production
+Config/production
 
 ### Vapor Patch ###
 Packages
