@@ -36,4 +36,17 @@ extension Request {
     
     return try ["user": user.makeJSON()]
   }
+  
+  /**
+   This one should get us just the user instead
+  */
+  public func getUserData() throws -> User {
+    let session = try assertSession()
+    
+    guard let userId = session.data["userId"]?.int, let user = try User.find(userId) else {
+      throw Abort.notFound
+    }
+    
+    return user
+  }
 }

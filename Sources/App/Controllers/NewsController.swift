@@ -50,9 +50,12 @@ public final class NewsController {
   public func index(_ req: Request) throws -> ResponseRepresentable {
 
     // if the query exists, we can attempt to delete
+    // we'll do a dirty check if the user is an admin or not
     if let newsId = req.query?["id"]?.int, let news = try New.find(newsId) {
-      try news.delete()
-      return Response(redirect: "/news")
+      if try req.getUserData().admin {
+        try news.delete()
+        return Response(redirect: "/news")
+      } 
     }
     
     // otherwise streamline the normal process

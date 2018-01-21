@@ -1,6 +1,6 @@
 #extend("base")
 
-#export("title") { St. Clair MAD Club Create News }
+#export("title") { St. Clair MAD Club Create Event }
 
 #export("content") {
   <div id="events" class="row mt-2">
