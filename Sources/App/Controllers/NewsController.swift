@@ -96,7 +96,7 @@ public final class NewsController {
     The GET Request, for which it's starting to create the website
   */
   public func storeNewsView(_ req: Request) throws -> ResponseRepresentable {
-    return try view.make("news/create")
+    return try view.make("news/create", req.getUser())
   }
   
   /**
@@ -123,6 +123,9 @@ public final class NewsController {
       return Response(redirect: "/news")
     }
     
-    return try view.make("news/edit", ["news": news.makeJSON()])
+    var results = try ["news": news.makeJSON()]
+    try req.user(array: &results)
+    
+    return try view.make("news/edit", results)
   }
 }

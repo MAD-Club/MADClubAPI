@@ -23,4 +23,17 @@ extension Request {
       array["user"] = try user.makeJSON()
     }
   }
+  
+  /**
+    Another session-helper, this one just returns the user for us
+  */
+  public func getUser() throws -> [String: JSON] {
+    let session = try assertSession()
+    
+    guard let userId = session.data["userId"]?.int, let user = try User.find(userId) else {
+      throw Abort.notFound
+    }
+    
+    return try ["user": user.makeJSON()]
+  }
 }

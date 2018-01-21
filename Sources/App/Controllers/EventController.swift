@@ -97,6 +97,6 @@ public final class EventController {
     try event.save()
     
     // assuming everything is fine, it'll revert to here
-    return try view.make("events/index")
+    return try view.make("events/index", req.getUser())
   }
 }
