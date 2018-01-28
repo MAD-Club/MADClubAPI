@@ -155,7 +155,7 @@ public final class EventController {
     }
     
     guard let fileName = req.formData?["file"]?.filename, let file = req.formData?["file"]?.part.body else {
-      return try view.make("upload", ["error": "No files selected for upload!"])
+      return try view.make("events/upload", ["error": "No files selected for upload!"])
     }
     
     guard let config = drop?.config["kloudless"] else { throw Abort.serverError }
@@ -169,10 +169,17 @@ public final class EventController {
       try event.galleries.add(asset)
     }
     
-    return Response(redirect: "/events")
+    return Response(redirect: "/events/\(id)")
   }
   
   public func uploadView(_ req: Request) throws -> ResponseRepresentable {
+    guard let id = req.parameters["id"]?.int, let event = try Event.find(id) else {
+      return Response(redirect: "/events")
+    }
     
+    var results = try ["event": event.makeJSON()]
+    try req.user(array: &results)
+    
+    return try view.make("events/upload", results)
   }
 }

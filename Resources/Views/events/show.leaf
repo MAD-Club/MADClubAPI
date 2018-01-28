@@ -12,6 +12,7 @@
       #if(user.admin) {
         <div class="col-sm-12 mb-2">
           <a class="btn btn-success btn-sm" href="/events/#(event.id)/edit">Edit</a>
+          <a class="btn btn-info btn-sm" href="/events/#(event.id)/upload">Upload Picture</a>
           <a class="btn btn-danger btn-sm" href="/events?id=#(event.id)">Delete</a>
         </div>
       }
@@ -20,7 +21,7 @@
     
     #loop(event.assets, "asset") {
         <div class="col-sm-3">
-          <img src="#(asset.fileName)" alt="Picture" />
+          <a href="#(asset.url)"><img src="#(asset.url)" alt="Picture" class="img-fluid" /></a>
         </div>
     }
   </div>
