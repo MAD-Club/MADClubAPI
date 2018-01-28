@@ -112,6 +112,7 @@ public final class UserController {
    **/
   public func store(_ req: Request) throws -> ResponseRepresentable {
     guard
+      let name = req.data["name"]?.string,
       let email = req.data["email"]?.string,
       let password = req.data["password"]?.string,
       let role = req.data["role"]?.string else {
@@ -122,7 +123,7 @@ public final class UserController {
       throw Abort(.conflict, reason: "This email address already exists! Do you already have an account?")
     }
     
-    let user = try User(email: email, role: role, password: password)
+    let user = try User(name: name, email: email, role: role, password: password)
     try user.save()
     
     return Response(redirect: "/")

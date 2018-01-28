@@ -1,0 +1,32 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club Board }
+
+#export("content") {
+  <!-- Check the users here to create a new page -->
+  #if(user) {
+    #if(user.admin) {
+      <div class="row col-sm-12 mt-2">
+        <a class="btn btn-primary" href="/board/create">Create new user</a>
+      </div>
+    }
+  }
+  <!-- Going through events here -->
+  #loop(users, "user") {
+    <div class="row mt-2">
+      <div class="col-sm-3">
+
+        <a href="/news/#(new.id)"><h1 class="col-sm-12">#(new.title)</h1></a>
+        #if(user) {
+          #if(user.admin) {
+            <div class="col-sm-12 mb-2">
+              <a class="btn btn-success btn-sm" href="/board/#(user.id)/edit">Edit</a>
+              <a class="btn btn-danger btn-sm" href="/board?id=#(user.id)">Delete</a>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
+}
+
