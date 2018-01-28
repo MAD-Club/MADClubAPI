@@ -1,0 +1,36 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club Login }
+
+#export("content") {
+  <div id="login" class="row mt-1">
+    #if(error) {
+      <div class="col-sm-12 alert alert-danger" role="alert">
+        #(error)
+      </div>
+    }
+    <div class="col-sm-12">
+      <form method="POST" action="/board">
+        <div class="form-group row">
+          <label for="name">Full Name</label>
+          <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" placeholder="Enter Name" required>
+        </div>
+        <div class="form-group row">
+          <label for="role">Board Role</label>
+          <input type="text" class="form-control" id="role" name="role" placeholder="Board Role" required />
+        </div>
+        <div class="form-group row">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+        </div>
+        <div class="form-group row">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
+        </div>
+        <div class="form-group row">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

@@ -1,0 +1,29 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club Edit Board Member }
+
+#export("content") {
+  <div id="events" class="row mt-2">
+    #if(error) {
+      <div class="col-sm-12 ml-1 alert alert-danger" role="alert">
+        #(error)
+      </div>
+    }
+    <div class="col-sm-12 mt-2">
+      <form method="POST" action="/board/#(member.id)/edit">
+        <div class="form-group">
+          <label for="title">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="#(member.name)" required>
+          </div>
+        <div class="form-group">
+          <label for="description">Role</label>
+          <input type="text" class="form-control" id="role" name="role" placeholder="Enter role" value="#(member.role)" required/>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+

@@ -22,8 +22,12 @@
             <p>#(member.role)</p>
             #if(user) {
               #if(user.admin) {
-                  <a class="btn btn-success btn-sm" href="/board/#(member)/edit">Edit</a>
+                #equal(member, user) {
+                  
+                } ##else() {
+                  <a class="btn btn-success btn-sm" href="/board/#(member.id)/edit">Edit</a>
                   <a class="btn btn-danger btn-sm" href="/board?id=#(member.id)">Delete</a>
+                }
               }
             }
           </div>
