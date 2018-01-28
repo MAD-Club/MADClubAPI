@@ -96,15 +96,47 @@ public final class UserController {
     Shows all users
    **/
   public func index(_ req: Request) throws -> ResponseRepresentable {
-    return try User.all().makeJSON()
+    var results = ["users": try User.all().makeJSON()]
+    try req.user(array: &results)
+    
+    // if the query exists, we can attempt to delete
+    // we'll do a dirty check if the user is an admin or not
+    if let id = req.query?["id"]?.int, let user = try User.find(id) {
+      if try req.getUserData().admin {
+        try user.delete()
+        return Response(redirect: "/board")
+      }
+    }
+    
+    return try view.make("board/index", results)
+  }
+  
+  public func updateView(_ req: Request) throws -> ResponseRepresentable {
+    guard let id = req.parameters["id"]?.int, let user = try User.find(id) else {
+      return Response(redirect: "/board")
+    }
+    
+    var results = ["member": try user.makeJSON()]
+    try req.user(array: &results)
+    
+    return try view.make("board/edit", results)
   }
   
   /**
-    Showcases users
+    Show one user
    **/
-  public func show(_ req: Request) throws -> ResponseRepresentable {
-    let user = try req.user()
-    return try user.makeJSON()
+  public func update(_ req: Request) throws -> ResponseRepresentable {
+    guard let id = req.parameters["id"]?.int, let user = try User.find(id) else {
+      return Response(redirect: "/board")
+    }
+    
+    user.role = req.formURLEncoded?["role"]?.string ?? user.role
+    user.name = req.formURLEncoded?["name"]?.string ?? user.name
+    user.profileURL = req.formURLEncoded?["profileURL"]?.string ?? user.profileURL
+    
+    try user.save()
+    
+    return Response(redirect: "/board")
   }
   
   /**
@@ -112,61 +144,31 @@ public final class UserController {
    **/
   public func store(_ req: Request) throws -> ResponseRepresentable {
     guard
-      let email = req.data["email"]?.string,
-      let password = req.data["password"]?.string else {
-        throw Abort.badRequest
+      let name = req.formURLEncoded?["name"]?.string,
+      let email = req.formURLEncoded?["email"]?.string,
+      let password = req.formURLEncoded?["password"]?.string,
+      let role = req.formURLEncoded?["role"]?.string else {
+        return try view.make("board/create", ["error": "Did not fill in the values correctly!"])
     }
     
     guard try User.makeQuery().filter("email", email.lowercased()).first() == nil else {
       throw Abort(.conflict, reason: "This email address already exists! Do you already have an account?")
     }
     
-    let user = try User(email: email, password: password)
+    let user = try User(name: name, email: email, role: role, password: password)
+    
+    // if profile exists
+    if let profileURL = req.formURLEncoded?["profileURL"]?.string {
+      user.profileURL = profileURL
+    }
+    
     try user.save()
     
-    return Response(redirect: "/")
+    return Response(redirect: "/board")
   }
   
-  /**
-    Makes changes to a specific user, based on the id
-  **/
-  public func update(_ req: Request) throws -> ResponseRepresentable {
-    let user = try req.user()
-    
-    // change up user passwords
-    if let email = req.data["email"]?.string {
-      guard !email.isEmpty else { throw Abort(.conflict, reason: "Email address cannot be empty!") }
-      user.email = email
-    }
-    if let password = req.data["password"]?.string {
-      guard !password.isEmpty else { throw Abort(.conflict, reason: "Password can't be empty!") }
-      user.password = try Hash.make(message: password).makeString()
-    }
-    try user.save()
-    // return back to the start
-    return Response(redirect: "/")
-  }
-  
-  /**
-    Destroys the user, deletes the user from the database
-  **/
-  public func destroy(_ req: Request) throws -> ResponseRepresentable {
-    let user = try req.user()
-    try user.delete()
-    return Response(redirect: "/")
-  }
-}
-
-extension Request {
-  fileprivate func user() throws -> User {
-    guard let userId = parameters["userId"]?.int else {
-      throw Abort.notFound
-    }
-    
-    guard let user = try User.find(userId) else {
-      throw Abort.notFound
-    }
-    
-    return user
+  /// Has the store view for us
+  public func createView(_ req: Request) throws -> ResponseRepresentable {
+    return try view.make("board/create")
   }
 }

@@ -38,11 +38,15 @@
   "users": [
     {
       "email": "test@example.com",
+      "name": "Bobby Bob",
+      "role": "3rd Year Student",
       "password": "test1234",
       "admin": true
     },
     {
       "email": "test2@example.com",
+      "name": "Giannis Antetokounmpo",
+      "role": "2nd Year Student",
       "password": "test1234",
       "admin": false
     }

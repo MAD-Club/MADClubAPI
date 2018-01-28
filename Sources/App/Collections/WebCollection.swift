@@ -26,15 +26,17 @@ public final class WebCollection: RouteCollection {
     let userController = UserController(view)
     
     builder.group("users") { user in
-      user.group(AuthenticateMiddleware(), AdminMiddleware()) { auth in
-        auth.get("/", handler: userController.index)
-        auth.post("/", handler: userController.store)
-        auth.patch(":userId", handler: userController.update)
-        auth.delete(":userId", handler: userController.destroy)
-      }
       user.get("login", handler: userController.loginView)
       user.post("login", handler: userController.loginWebPost)
       user.get("logout", handler: userController.logout)
+    }
+    
+    builder.group("board") { board in
+      board.get("/", handler: userController.index)
+      board.grouped(AuthenticateMiddleware(), AdminMiddleware()).get("create", handler: userController.createView)
+      board.grouped(AuthenticateMiddleware(), AdminMiddleware()).post("/", handler: userController.store)
+      board.grouped(AuthenticateMiddleware(), AdminMiddleware()).get(":id", "edit", handler: userController.updateView)
+      board.grouped(AuthenticateMiddleware(), AdminMiddleware()).post(":id", "edit", handler: userController.update)
     }
     
     // MARK: Events Web View
