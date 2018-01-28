@@ -96,6 +96,7 @@ public final class SeedCommand: Command {
       try users.forEach { user in
         let userObject = try User(
           email: user.get("email"),
+          role: user.get("role"),
           password: user.get("password")
         )
         userObject.admin = try user.get("admin")
