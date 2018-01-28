@@ -45,6 +45,7 @@ public final class WebCollection: RouteCollection {
     events.get("/", ":id", handler: eventController.show)
     events.grouped(AuthenticateMiddleware(), AdminMiddleware()).post("/", handler: eventController.createEvent)
     events.grouped(AuthenticateMiddleware(), AdminMiddleware()).get("create", handler: eventController.createEventView)
+    events.post(":id", "upload", handler: eventController.uploadImageForEvent)
     events.grouped(AuthenticateMiddleware(), AdminMiddleware()).get(":id", "edit", handler: eventController.editEventView)
     events.grouped(AuthenticateMiddleware(), AdminMiddleware()).post(":id", "edit", handler: eventController.editEvent)
     

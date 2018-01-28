@@ -44,7 +44,7 @@ public class KloudlessService {
    - fileName: String - the filename of the file
    - file: Bytes - Wrapper for Bytes, in a BodyRepresentable
    **/
-  public func uploadVideo(fileName: String, file: Bytes) throws -> JSON {
+  public func uploadVideo(fileName: String, file: Bytes) throws -> Asset {
     guard let parentId = try createFolder(fileType: .images) else {
       throw Abort(.forbidden, reason: "Could not get the item!")
     }
@@ -58,7 +58,7 @@ public class KloudlessService {
    - fileName: String - the filename of the file
    - file: Bytes - Wrapper for Bytes, in a BodyRepresentable
    **/
-  public func uploadDocument(fileName: String, file: Bytes) throws -> JSON {
+  public func uploadDocument(fileName: String, file: Bytes) throws -> Asset {
     guard let parentId = try createFolder(fileType: .documents) else {
       throw Abort(.forbidden, reason: "Could not get the item!")
     }
@@ -72,7 +72,7 @@ public class KloudlessService {
      - fileName: String - the filename of the file
      - file: Bytes - Wrapper for Bytes, in a BodyRepresentable
   **/
-  public func uploadImage(fileName: String, file: Bytes) throws -> JSON {
+  public func uploadImage(fileName: String, file: Bytes) throws -> Asset {
     guard let parentId = try createFolder(fileType: .images) else {
       throw Abort(.forbidden, reason: "Could not get the item!")
     }
@@ -87,7 +87,7 @@ public class KloudlessService {
      - fileName: String value, used to get the file name
      - file: The actual contents of the file, it'll be loaded into GDrive
   **/
-  private func upload(fileName: String, file: Bytes, parentId: String) throws -> JSON {
+  private func upload(fileName: String, file: Bytes, parentId: String) throws -> Asset {
     let fileUploadUrl = "\(baseUrl)/accounts/\(accountId)/storage/files"
     
     // create json to put in headers
@@ -127,7 +127,7 @@ public class KloudlessService {
     
     try asset.save()
     
-    return try asset.makeJSON()
+    return asset
   }
   
   /**

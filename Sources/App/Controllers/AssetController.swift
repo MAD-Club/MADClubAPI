@@ -35,7 +35,7 @@ public final class AssetController: ResourceRepresentable {
         throw Abort(.conflict, reason: "Could not get file type!")
     }
     
-    let results: JSON
+    let results: Asset
     
     switch fileType {
     case .images:
@@ -46,7 +46,7 @@ public final class AssetController: ResourceRepresentable {
       results = try kloudless.uploadVideo(fileName: fileName, file: file)
     }
 
-    return results
+    return try results.makeJSON()
   }
   
   /**
