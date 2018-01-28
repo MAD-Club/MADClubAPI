@@ -1,0 +1,25 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club Upload Event }
+
+#export("content") {
+  <div id="events" class="row mt-2">
+    #if(error) {
+      <div class="col-sm-12 ml-1 alert alert-danger" role="alert">
+        #(error)
+      </div>
+    }
+    <div class="col-sm-12 mt-2">
+      <form method="POST" action="/events/#(event.id)/upload" enctype='multipart/form-data'>
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="file" class="form-control" id="file" name="file" accept="image/*" required>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+

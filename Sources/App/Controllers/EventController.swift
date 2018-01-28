@@ -145,4 +145,41 @@ public final class EventController {
     
     return Response(redirect: "/events/\(id)")
   }
+  
+  /**
+   Post request to upload images to events
+   */
+  public func uploadImageForEvent(_ req: Request) throws -> ResponseRepresentable {
+    guard let id = req.parameters["id"]?.int, let event = try Event.find(id) else {
+      return Response(redirect: "/events")
+    }
+    
+    guard let fileName = req.formData?["file"]?.filename, let file = req.formData?["file"]?.part.body else {
+      return try view.make("events/upload", ["error": "No files selected for upload!"])
+    }
+    
+    guard let config = drop?.config["kloudless"] else { throw Abort.serverError }
+
+    let kloudless = try KloudlessService(config: config)
+
+    let asset = try kloudless.uploadImage(fileName: fileName, file: file)
+    
+    // add the asset that was created here
+    if try !event.galleries.isAttached(asset) {
+      try event.galleries.add(asset)
+    }
+    
+    return Response(redirect: "/events/\(id)")
+  }
+  
+  public func uploadView(_ req: Request) throws -> ResponseRepresentable {
+    guard let id = req.parameters["id"]?.int, let event = try Event.find(id) else {
+      return Response(redirect: "/events")
+    }
+    
+    var results = try ["event": event.makeJSON()]
+    try req.user(array: &results)
+    
+    return try view.make("events/upload", results)
+  }
 }

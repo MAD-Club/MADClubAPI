@@ -71,6 +71,7 @@ extension Event: JSONRepresentable {
     try json.set("id", id)
     try json.set("title", title)
     try json.set("description", description)
+    try json.set("assets", galleries.all().makeJSON())
     try json.set("startDate", startDate)
     try json.set("endDate", endDate)
     return json
