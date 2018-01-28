@@ -119,6 +119,15 @@
         }
       },
       {
+        "package": "Gatekeeper",
+        "repositoryURL": "https://github.com/nodes-vapor/gatekeeper",
+        "state": {
+          "branch": null,
+          "revision": "0199170fecf3a6f52fa40cc3fc88714adc6d4be7",
+          "version": "2.0.1"
+        }
+      },
+      {
         "package": "JSON",
         "repositoryURL": "https://github.com/vapor/json.git",
         "state": {
