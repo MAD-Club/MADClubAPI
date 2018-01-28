@@ -99,7 +99,7 @@ public final class UserController {
     var results = ["users": try User.all().makeJSON()]
     try req.user(array: &results)
     
-    return try view.make("board/index")
+    return try view.make("board/index", results)
   }
   
   /**

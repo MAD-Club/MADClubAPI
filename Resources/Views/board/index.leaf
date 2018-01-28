@@ -12,21 +12,24 @@
     }
   }
   <!-- Going through events here -->
-  #loop(users, "user") {
     <div class="row mt-2">
-      <div class="col-sm-3">
-
-        <a href="/news/#(new.id)"><h1 class="col-sm-12">#(new.title)</h1></a>
-        #if(user) {
-          #if(user.admin) {
-            <div class="col-sm-12 mb-2">
-              <a class="btn btn-success btn-sm" href="/board/#(user.id)/edit">Edit</a>
-              <a class="btn btn-danger btn-sm" href="/board?id=#(user.id)">Delete</a>
-            </div>
-          }
-        }
-      </div>
+      #loop(users, "member") {
+          <div class="col-sm-3 mt-2">
+            <h2>#(member.name)</h2>
+            #if(member.profileURL) {
+                <img src="#(member.profileURL)" class="img-fluid" alt="profile picture" />
+            }
+            <p>#(member.role)</p>
+            #if(user) {
+              #if(user.admin) {
+                <div class="col-sm-12 mb-2">
+                  <a class="btn btn-success btn-sm" href="/board/#(member)/edit">Edit</a>
+                  <a class="btn btn-danger btn-sm" href="/board?id=#(member.id)">Delete</a>
+                </div>
+              }
+            }
+          </div>
+      }
     </div>
-  }
 }
 
