@@ -17,17 +17,6 @@ public final class V1Collection: RouteCollection {
   
   public func build(_ builder: RouteBuilder) throws {
     let api = builder.grouped("api", "v1")
-    
-    // MARK: - User Controller
-    let userController = UserController(view)
-    
-    api.post("auth", "login", handler: userController.loginAPIPost)
-
-    // api
-    api.grouped(AuthenticateMiddleware(), AdminMiddleware()).group("users") { user in
-      user.get("/", handler: userController.index)
-      user.get(":userId", handler: userController.show)
-    }
   
     // MARK: Assets Controller
     let assetsController = AssetController()

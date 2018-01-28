@@ -96,7 +96,10 @@ public final class UserController {
     Shows all users
    **/
   public func index(_ req: Request) throws -> ResponseRepresentable {
-    return try User.all().makeJSON()
+    var results = ["users": try User.all().makeJSON()]
+    try req.user(array: &results)
+    
+    return try view.make("board/index")
   }
   
   /**
