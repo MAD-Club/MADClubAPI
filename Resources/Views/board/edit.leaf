@@ -13,11 +13,15 @@
       <form method="POST" action="/board/#(member.id)/edit">
         <div class="form-group">
           <label for="title">Name</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="#(member.name)" required>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="#(member.name)" />
           </div>
         <div class="form-group">
           <label for="description">Role</label>
-          <input type="text" class="form-control" id="role" name="role" placeholder="Enter role" value="#(member.role)" required/>
+          <input type="text" class="form-control" id="role" name="role" placeholder="Enter role" value="#(member.role)" />
+        </div>
+        <div class="form-group">
+          <label for="description">Profile Image URL</label>
+          <input type="text" class="form-control" id="profileURL" name="profileURL" placeholder="Enter profile link image url" value="#(member.profileURL)" />
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Submit</button>

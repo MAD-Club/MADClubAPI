@@ -20,6 +20,10 @@
           <input type="text" class="form-control" id="role" name="role" placeholder="Board Role" required />
         </div>
         <div class="form-group row">
+          <label for="profile">Profile Image URL</label>
+          <input type="text" class="form-control" id="profileURL" name="profileURL" placeholder="Enter profile link image url" />
+        </div>
+        <div class="form-group row">
           <label for="exampleInputEmail1">Email address</label>
           <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" required>
         </div>

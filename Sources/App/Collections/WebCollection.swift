@@ -33,8 +33,10 @@ public final class WebCollection: RouteCollection {
     
     builder.group("board") { board in
       board.get("/", handler: userController.index)
+      board.grouped(AuthenticateMiddleware(), AdminMiddleware()).get("create", handler: userController.createView)
       board.grouped(AuthenticateMiddleware(), AdminMiddleware()).post("/", handler: userController.store)
-      board.grouped(AuthenticateMiddleware(), AdminMiddleware()).patch(":id", handler: userController.update)
+      board.grouped(AuthenticateMiddleware(), AdminMiddleware()).get(":id", "edit", handler: userController.updateView)
+      board.grouped(AuthenticateMiddleware(), AdminMiddleware()).post(":id", "edit", handler: userController.update)
     }
     
     // MARK: Events Web View

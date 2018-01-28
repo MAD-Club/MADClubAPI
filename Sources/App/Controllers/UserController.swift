@@ -132,6 +132,7 @@ public final class UserController {
     
     user.role = req.formURLEncoded?["role"]?.string ?? user.role
     user.name = req.formURLEncoded?["name"]?.string ?? user.name
+    user.profileURL = req.formURLEncoded?["profileURL"]?.string ?? user.profileURL
     
     try user.save()
     
@@ -147,7 +148,7 @@ public final class UserController {
       let email = req.formURLEncoded?["email"]?.string,
       let password = req.formURLEncoded?["password"]?.string,
       let role = req.formURLEncoded?["role"]?.string else {
-        throw Abort.badRequest
+        return try view.make("board/create", ["error": "Did not fill in the values correctly!"])
     }
     
     guard try User.makeQuery().filter("email", email.lowercased()).first() == nil else {
@@ -155,8 +156,19 @@ public final class UserController {
     }
     
     let user = try User(name: name, email: email, role: role, password: password)
+    
+    // if profile exists
+    if let profileURL = req.formURLEncoded?["profileURL"]?.string {
+      user.profileURL = profileURL
+    }
+    
     try user.save()
     
-    return try Response(redirect: "/board")
+    return Response(redirect: "/board")
+  }
+  
+  /// Has the store view for us
+  public func createView(_ req: Request) throws -> ResponseRepresentable {
+    return try view.make("board/create")
   }
 }
