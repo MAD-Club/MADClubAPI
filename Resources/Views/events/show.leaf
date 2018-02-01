@@ -22,6 +22,11 @@
     #loop(event.assets, "asset") {
         <div class="col-sm-3">
           <a href="#(asset.url)"><img src="#(asset.url)" alt="Picture" class="img-fluid" /></a>
+          #if(user) {
+              #if(user.admin) {
+                <a class="btn btn-danger btn-sm" href="/assets?id=#(asset.id)">Delete</a>
+            }
+        }
         </div>
     }
   </div>

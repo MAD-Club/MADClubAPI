@@ -52,6 +52,12 @@ public final class EventController {
     // we'll do a dirty check if the user is an admin or not
     if let id = req.query?["id"]?.int, let event = try Event.find(id) {
       if try req.getUserData().admin {
+        // before deleting the event, we want to check all the assets and attempt to delete that as well
+        try event.galleries.all().forEach {
+          try event.galleries.remove($0)
+          try $0.delete()
+        }
+        
         try event.delete()
         return Response(redirect: "/events")
       }
