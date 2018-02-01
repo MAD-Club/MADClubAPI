@@ -54,11 +54,11 @@ public final class AssetController {
   public func destroy(_ req: Request) throws -> ResponseRepresentable {
     if let id = req.query?["id"]?.int, let asset = try Asset.find(id) {
       if try req.getUserData().admin {
-        
+        try asset.events.all().forEach { try $0.galleries.remove(asset) }
         try asset.delete()
       }
     }
     
-    return Response(redirect: req.uri.path)
+    return Response(redirect: "/events")
   }
 }

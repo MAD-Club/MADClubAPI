@@ -58,6 +58,12 @@ public final class Asset: Model, Timestampable {
   }
 }
 
+extension Asset {
+  public var events: Siblings<Asset, Event, Pivot<Event, Asset>> {
+    return siblings()
+  }
+}
+
 //MARK: Database
 extension Asset: Preparation {
   public static func prepare(_ database: Database) throws {
