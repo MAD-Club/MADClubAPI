@@ -162,6 +162,20 @@ public class KloudlessService {
   }
   
   /**
+   Delete file
+  */
+  public func deleteFile(fileId: String) throws {
+    let url = "\(baseUrl)/accounts/\(accountId)/storage/files/\(fileId)?permanent=true"
+    
+    // create header
+    let headers: [HeaderKey: String] = [.authorization: "APIKey \(apiKey)", .contentType: "application/json"]
+    
+    let request = Request(method: .delete, uri: url, headers: headers)
+    
+    _ = try EngineClient.factory.respond(to: request)
+  }
+  
+  /**
    This creates a folder for organizing. Once created, it'll return us the parentId or folderId
    
    - returns: Parent Folder Id

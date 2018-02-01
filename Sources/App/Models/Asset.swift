@@ -62,6 +62,12 @@ extension Asset {
   public var events: Siblings<Asset, Event, Pivot<Event, Asset>> {
     return siblings()
   }
+  
+  public func willDelete() {
+    if let config = drop?.config, let kloudlessConfig: Config = try? config.get("kloudless"), let kloudless = try? KloudlessService(config: kloudlessConfig) {
+      try? kloudless.deleteFile(fileId: fileId)
+    }
+  }
 }
 
 //MARK: Database

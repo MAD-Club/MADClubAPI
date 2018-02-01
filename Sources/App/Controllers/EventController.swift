@@ -53,7 +53,11 @@ public final class EventController {
     if let id = req.query?["id"]?.int, let event = try Event.find(id) {
       if try req.getUserData().admin {
         // before deleting the event, we want to check all the assets and attempt to delete that as well
-        try event.galleries.delete()
+        try event.galleries.all().forEach {
+          try event.galleries.remove($0)
+          try $0.delete()
+        }
+        
         try event.delete()
         return Response(redirect: "/events")
       }
