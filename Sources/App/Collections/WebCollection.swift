@@ -52,6 +52,10 @@ public final class WebCollection: RouteCollection {
     events.grouped(AuthenticateMiddleware(), AdminMiddleware()).get(":id", "edit", handler: eventController.editEventView)
     events.grouped(AuthenticateMiddleware(), AdminMiddleware()).post(":id", "edit", handler: eventController.editEvent)
     
+    // MARK: Assets
+    let assetController = AssetController()
+    builder.grouped("assets").grouped(AuthenticateMiddleware(), AdminMiddleware()).get("/", handler: assetController.destroy)
+    
     // MARK: News
     let newsController = NewsController(view)
     

@@ -9,7 +9,7 @@ import Foundation
 import Vapor
 import HTTP
 
-public final class AssetController: ResourceRepresentable {
+public final class AssetController {
   /**
     Retrieves all the assets found
   **/
@@ -48,27 +48,17 @@ public final class AssetController: ResourceRepresentable {
 
     return try results.makeJSON()
   }
-  
-  /**
-    Showcases an asset, based on the file storage API
-  **/
-  public func show(_ req: Request, asset: Asset) throws -> ResponseRepresentable {
-    return try asset.makeJSON()
-  }
-  
   /**
     Destroys the asset, along with the file storage API too
   **/
-  public func destroy(_ req: Request, asset: Asset) throws -> ResponseRepresentable {
-    return JSON()
-  }
-  
-  public func makeResource() -> Resource<Asset> {
-    return Resource(
-      index: index,
-      store: store,
-      show: show,
-      destroy: destroy
-    )
+  public func destroy(_ req: Request) throws -> ResponseRepresentable {
+    if let id = req.query?["id"]?.int, let asset = try Asset.find(id) {
+      if try req.getUserData().admin {
+        
+        try asset.delete()
+      }
+    }
+    
+    return Response(redirect: req.uri.path)
   }
 }
