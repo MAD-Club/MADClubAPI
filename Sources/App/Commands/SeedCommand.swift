@@ -23,6 +23,7 @@ public final class SeedCommand: Command {
   private let events: [Config]?
   private let news: [Config]?
   private let users: [Config]?
+  private let admin: Config?
   
   public init(console: ConsoleProtocol, config: Config) {
     self.console = console
@@ -30,6 +31,7 @@ public final class SeedCommand: Command {
     events = config["seed", "events"]?.array
     news = config["seed", "news"]?.array
     users = config["seed", "users"]?.array
+    admin = config["seed"]
   }
   
   /**
@@ -107,6 +109,20 @@ public final class SeedCommand: Command {
     }
   }
   
+  fileprivate func prepareAdminUser() throws {
+    console.print("Adding master user...")
+    if let admin = admin {
+      let user = try User(
+        name: admin.get("name"),
+        email: admin.get("email"),
+        role: admin.get("role"),
+        password: admin.get("password")
+      )
+      try user.save()
+      console.print("User saved!!")
+    }
+  }
+  
   public func run(arguments: [String]) throws {
     console.print("Running seed command...")
     if environment == .development {
@@ -118,6 +134,10 @@ public final class SeedCommand: Command {
       try prepareEvents()
       try prepareNews()
       try prepareUsers()
+    } else if environment == .production {
+      // if it's production, we're preparing the admin seed
+      // this is usually not ideal, but it's fine
+      try prepareAdminUser()
     }
   }
 }
