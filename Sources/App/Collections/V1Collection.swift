@@ -16,15 +16,27 @@ public final class V1Collection: RouteCollection {
   }
   
   public func build(_ builder: RouteBuilder) throws {
-    // this sets us up for our collection of routes to start building
     let api = builder.grouped("api", "v1")
+
+    // MARK: EventController
+    let eventController = EventController(view)
     
-    //: MARK - UserController
-    let userController = UserController()
-    api.resource("users", userController)
+    api.grouped(APIMiddleware()).group("events") { events in
+      events.get("/", handler: eventController.all)
+    }
+    
+    // MARK: NewsController
+    let newsController = NewsController(view)
+    
+    api.grouped(APIMiddleware()).group("news") { news in
+      news.get("/", handler: newsController.all)
+      news.get("/", ":id", handler: newsController.getNews)
+    }
   
-    //: MARK - HomeController
-    let homeController = HomeController(view)
-    builder.get("/", handler: homeController.index)
+    // MARK: Events API
+    api.grouped(APIMiddleware()).group("events") { event in
+      event.get("/", handler: eventController.all)
+      event.get("/", ":id", handler: newsController.getNews)
+    }
   }
 }

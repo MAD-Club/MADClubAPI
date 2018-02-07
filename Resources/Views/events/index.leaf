@@ -1,0 +1,30 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club Events }
+
+#export("content") {
+  <!-- Check for user -->
+  #if(user) {
+    #if(user.admin) {
+      <div class="row col-sm-12 mt-2">
+        <a class="btn btn-primary" href="/events/create">Create Event</a>
+      </div>
+    }
+  }
+  <!-- Going through events here -->
+  #loop(events, "event") {
+    <div class="row mt-2">
+      <h1 class="col-sm-12"><a href="/events/#(event.id)">#(event.title)</a></h1>
+      #if(user) {
+        #if(user.admin) {
+          <div class="col-sm-12 mb-2">
+            <a class="btn btn-success btn-sm" href="/events/#(event.id)/edit">Edit</a>
+            <a class="btn btn-danger btn-sm" href="/events?id=#(event.id)">Delete</a>
+          </div>
+        }
+      }
+      <p class="col-sm-12">Start Date: #dateformat(event.startDate) | End Date: #dateformat(event.endDate)</p>
+      <p class="col-sm-12">#(event.description)</p>
+    </div>
+  }
+}

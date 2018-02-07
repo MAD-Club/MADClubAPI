@@ -1,0 +1,39 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club Edit Event }
+
+#export("content") {
+  <div id="events" class="row mt-2">
+    #if(error) {
+      <div class="col-sm-12 ml-1 alert alert-danger" role="alert">
+        #(error)
+      </div>
+    }
+    <div class="col-sm-12 mt-2">
+      <form method="POST" action="/events/#(event.id)/edit">
+        <div class="form-group">
+          <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title" value="#(event.title)" required>
+          </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" class="form-control" id="description" name="description" placeholder="Enter a desciription of your event" value="#(event.description)" required/>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-sm-6">
+            <label for="startDate">Start Date</label>
+            <input type="datetime-local" class="form-control" id="startDate" name="startDate" value="#datetimeformat(event.startDate)" placeholder="Add a starting date to your event" required/>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="endDate">End Date</label>
+            <input type="datetime-local" class="form-control" id="endDate" name="endDate" value="#datetimeformat(event.endDate)" placeholder="Add your end date" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+

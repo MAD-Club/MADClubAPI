@@ -1,0 +1,11 @@
+<footer class="footer">
+  <div class="container">
+    <a href="#">FAQ</a>
+    <a href="mailto:stclair.madclub@gmail.com">Contact Us</a>
+    #if(user) {
+      <a href="/users/logout">Logout</a>
+    } ##else() {
+      <a href="/users/login">Login</a>
+    }
+  </div>
+</footer>

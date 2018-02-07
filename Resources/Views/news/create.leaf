@@ -1,0 +1,29 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club Create News }
+
+#export("content") {
+  <div id="news" class="row mt-1">
+    #if(error) {
+      <div class="col-sm-12 alert alert-danger" role="alert">
+        #(error)
+      </div>
+    }
+    <div class="col-sm-12 mt-2">
+      <form method="POST" action="/news">
+        <div class="form-group row">
+        <label for="title">News Title</label>
+          <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title" required>
+        </div>
+        <div class="form-group row">
+          <label for="content">Content</label>
+          <textarea class="form-control" id="content" name="content" rows="6"></textarea>
+        </div>
+        <div class="form-group row">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+

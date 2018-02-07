@@ -1,0 +1,30 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club News }
+
+#export("content") {
+  <!-- Check the users here to create a new page -->
+  #if(user) {
+    #if(user.admin) {
+      <div class="row col-sm-12 mt-2">
+        <a class="btn btn-primary" href="/news/create">Create News</a>
+      </div>
+    }
+  }
+  <!-- Going through events here -->
+  #loop(news, "new") {
+    <div class="row mt-2">
+      <a href="/news/#(new.id)"><h1 class="col-sm-12">#(new.title)</h1></a>
+      <p class="col-sm-12">Created At: #dateformat(new.createdAt) | Last Updated: #dateformat(new.updatedAt)</p>
+      #if(user) {
+        #if(user.admin) {
+          <div class="col-sm-12 mb-2">
+            <a class="btn btn-success btn-sm" href="/news/#(new.id)/edit">Edit</a>
+            <a class="btn btn-danger btn-sm" href="/news?id=#(new.id)">Delete</a>
+          </div>
+        }
+      }
+    </div>
+  }
+}
+

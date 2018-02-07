@@ -2,6 +2,24 @@
   "object": {
     "pins": [
       {
+        "package": "Auth",
+        "repositoryURL": "https://github.com/vapor/auth.git",
+        "state": {
+          "branch": null,
+          "revision": "b8a0d6d7ac141831c999bf2458408dc2ec2edb39",
+          "version": "1.2.1"
+        }
+      },
+      {
+        "package": "AuthProvider",
+        "repositoryURL": "https://github.com/vapor/auth-provider.git",
+        "state": {
+          "branch": null,
+          "revision": "c8a89d5f32873a7ec6037e2c78a192526c496618",
+          "version": "1.2.0"
+        }
+      },
+      {
         "package": "BCrypt",
         "repositoryURL": "https://github.com/vapor/bcrypt.git",
         "state": {
@@ -101,12 +119,39 @@
         }
       },
       {
+        "package": "Gatekeeper",
+        "repositoryURL": "https://github.com/nodes-vapor/gatekeeper",
+        "state": {
+          "branch": null,
+          "revision": "0199170fecf3a6f52fa40cc3fc88714adc6d4be7",
+          "version": "2.0.1"
+        }
+      },
+      {
         "package": "JSON",
         "repositoryURL": "https://github.com/vapor/json.git",
         "state": {
           "branch": null,
           "revision": "5c2a62771cefdb04b1f96f4ccc52b581fe20cfb1",
           "version": "2.2.0"
+        }
+      },
+      {
+        "package": "JWT",
+        "repositoryURL": "https://github.com/vapor/jwt.git",
+        "state": {
+          "branch": null,
+          "revision": "84f4cabfa702208bddfd93cd76df88df9e6ef4ef",
+          "version": "2.3.0"
+        }
+      },
+      {
+        "package": "JWTProvider",
+        "repositoryURL": "https://github.com/vapor/jwt-provider.git",
+        "state": {
+          "branch": null,
+          "revision": "f648dd6814970d9c7b27b79e9ce62699561d8d14",
+          "version": "1.3.0"
         }
       },
       {
@@ -125,6 +170,15 @@
           "branch": null,
           "revision": "0cbeb0db6fc955c2cf12a0293c1e54f16cbb1ca3",
           "version": "1.1.0"
+        }
+      },
+      {
+        "package": "MarkdownProvider",
+        "repositoryURL": "https://github.com/vapor-community/markdown-provider.git",
+        "state": {
+          "branch": null,
+          "revision": "554143db48dc1e1fb3ebceb83eb501a39966db08",
+          "version": "1.1.1"
         }
       },
       {
@@ -200,12 +254,30 @@
         }
       },
       {
+        "package": "SendGridProvider",
+        "repositoryURL": "https://github.com/vapor-community/sendgrid-provider.git",
+        "state": {
+          "branch": null,
+          "revision": "dd565b84d1f666c72591c94ef95a1f505eb4daee",
+          "version": "2.2.1"
+        }
+      },
+      {
         "package": "Sockets",
         "repositoryURL": "https://github.com/vapor/sockets.git",
         "state": {
           "branch": null,
           "revision": "f6b06982e94db71227e99c56fec5899a8526e8ad",
           "version": "2.1.0"
+        }
+      },
+      {
+        "package": "SwiftMarkdown",
+        "repositoryURL": "https://github.com/vapor-community/markdown.git",
+        "state": {
+          "branch": null,
+          "revision": "aea4876786fa284f6d86af1ce3436a17e22035b5",
+          "version": "0.4.0"
         }
       },
       {
@@ -224,6 +296,15 @@
           "branch": null,
           "revision": "59bde985edbdf6480c541485317c8d41cc5fefb7",
           "version": "2.2.2"
+        }
+      },
+      {
+        "package": "cmark",
+        "repositoryURL": "https://github.com/brokenhandsio/cmark-gfm.git",
+        "state": {
+          "branch": null,
+          "revision": "28d762c29119b5e1c3c0ba1e87198a6c0abcdd7a",
+          "version": "1.0.0"
         }
       }
     ]
