@@ -23,7 +23,6 @@ public final class SeedCommand: Command {
   private let events: [Config]?
   private let news: [Config]?
   private let users: [Config]?
-  private let admin: Config?
   
   public init(console: ConsoleProtocol, config: Config) {
     self.console = console
