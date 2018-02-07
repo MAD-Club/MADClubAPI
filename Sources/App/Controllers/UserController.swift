@@ -96,7 +96,7 @@ public final class UserController {
     Shows all users
    **/
   public func index(_ req: Request) throws -> ResponseRepresentable {
-    var results = ["users": ]
+    var results = ["users": try User.all().makeJSON()]
     try req.user(array: &results)
     
     // if the query exists, we can attempt to delete
