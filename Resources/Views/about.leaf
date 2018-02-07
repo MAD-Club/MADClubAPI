@@ -1,0 +1,13 @@
+#extend("base")
+
+#export("title") { St. Clair MAD Club }
+
+#export("content") {
+  <div class="row mt-1">
+    <div class="col-sm-12 mt-1">
+      <h2>What is MAD Club?</h2>
+      <p><em>MAD stands for Mobile Application Development</em></p>
+      <p>The MAD Club is a club for students with an interest in developing Applications for Mobile devices. MAD for short. We are students at St. Clair College looking to better ourselves as developers by providing opportunities to work on projects outside the classroom. We are currently hosting hackathons at the club level, but are hoping to expand beyond that in the future.</p>
+    </div>
+  </div>
+}
