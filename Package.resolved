@@ -38,21 +38,12 @@
         }
       },
       {
-        "package": "CPostgreSQL",
-        "repositoryURL": "https://github.com/vapor-community/cpostgresql.git",
+        "package": "cmark",
+        "repositoryURL": "https://github.com/brokenhandsio/cmark-gfm.git",
         "state": {
           "branch": null,
-          "revision": "33f0f94f023ab61ccd0ba2f076dd6a448be853e3",
-          "version": "2.1.0"
-        }
-      },
-      {
-        "package": "CTLS",
-        "repositoryURL": "https://github.com/vapor/ctls.git",
-        "state": {
-          "branch": null,
-          "revision": "fddec6a4643d6e85b6bb6dc54b1b5cdbabd395d2",
-          "version": "1.1.2"
+          "revision": "28d762c29119b5e1c3c0ba1e87198a6c0abcdd7a",
+          "version": "1.0.0"
         }
       },
       {
@@ -74,12 +65,30 @@
         }
       },
       {
+        "package": "CPostgreSQL",
+        "repositoryURL": "https://github.com/vapor-community/cpostgresql.git",
+        "state": {
+          "branch": null,
+          "revision": "33f0f94f023ab61ccd0ba2f076dd6a448be853e3",
+          "version": "2.1.0"
+        }
+      },
+      {
         "package": "Crypto",
         "repositoryURL": "https://github.com/vapor/crypto.git",
         "state": {
           "branch": null,
           "revision": "bf4470b9da79024aab79c85de80374f6c29e3864",
           "version": "2.1.1"
+        }
+      },
+      {
+        "package": "CTLS",
+        "repositoryURL": "https://github.com/vapor/ctls.git",
+        "state": {
+          "branch": null,
+          "revision": "fddec6a4643d6e85b6bb6dc54b1b5cdbabd395d2",
+          "version": "1.1.2"
         }
       },
       {
@@ -116,15 +125,6 @@
           "branch": null,
           "revision": "3bb67ad0be2df74367087e90391436b4336e7962",
           "version": "1.2.0"
-        }
-      },
-      {
-        "package": "Gatekeeper",
-        "repositoryURL": "https://github.com/nodes-vapor/gatekeeper",
-        "state": {
-          "branch": null,
-          "revision": "0199170fecf3a6f52fa40cc3fc88714adc6d4be7",
-          "version": "2.0.1"
         }
       },
       {
@@ -170,6 +170,15 @@
           "branch": null,
           "revision": "0cbeb0db6fc955c2cf12a0293c1e54f16cbb1ca3",
           "version": "1.1.0"
+        }
+      },
+      {
+        "package": "SwiftMarkdown",
+        "repositoryURL": "https://github.com/vapor-community/markdown.git",
+        "state": {
+          "branch": null,
+          "revision": "aea4876786fa284f6d86af1ce3436a17e22035b5",
+          "version": "0.4.0"
         }
       },
       {
@@ -245,15 +254,6 @@
         }
       },
       {
-        "package": "SQLite",
-        "repositoryURL": "https://github.com/vapor/sqlite.git",
-        "state": {
-          "branch": null,
-          "revision": "9aceb6a0d7b1698a557647493bd78b030dad468b",
-          "version": "2.3.1"
-        }
-      },
-      {
         "package": "SendGridProvider",
         "repositoryURL": "https://github.com/vapor-community/sendgrid-provider.git",
         "state": {
@@ -272,12 +272,12 @@
         }
       },
       {
-        "package": "SwiftMarkdown",
-        "repositoryURL": "https://github.com/vapor-community/markdown.git",
+        "package": "SQLite",
+        "repositoryURL": "https://github.com/vapor/sqlite.git",
         "state": {
           "branch": null,
-          "revision": "aea4876786fa284f6d86af1ce3436a17e22035b5",
-          "version": "0.4.0"
+          "revision": "9aceb6a0d7b1698a557647493bd78b030dad468b",
+          "version": "2.3.1"
         }
       },
       {
@@ -296,15 +296,6 @@
           "branch": null,
           "revision": "59bde985edbdf6480c541485317c8d41cc5fefb7",
           "version": "2.2.2"
-        }
-      },
-      {
-        "package": "cmark",
-        "repositoryURL": "https://github.com/brokenhandsio/cmark-gfm.git",
-        "state": {
-          "branch": null,
-          "revision": "28d762c29119b5e1c3c0ba1e87198a6c0abcdd7a",
-          "version": "1.0.0"
         }
       }
     ]
