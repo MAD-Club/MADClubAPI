@@ -54,3 +54,8 @@ body {
   padding: 0 15px;
   color: #FFF;
 }
+
+.carousel-inner{
+  width: auto;
+  max-height: 500px !important;
+}
